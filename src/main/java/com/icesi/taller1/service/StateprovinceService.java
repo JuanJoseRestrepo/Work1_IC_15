@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.CountryregionRepository;
@@ -53,24 +54,18 @@ public class StateprovinceService {
 	}
 	
 	@Transactional
-	public void update(Stateprovince sp) {
+	public Stateprovince update(Stateprovince entity, Integer countryregionid) {
+		Stateprovince entityActual = null;
 		
-		boolean one = sp.getStateprovincecode().length() >= 5;
-		boolean two = sp.getIsonlystateprovinceflag().equals("Y") || sp.getIsonlystateprovinceflag().equals("N");
-		boolean three = sp.getName().length() >= 5;
-		
-		if (one && two && three) {
-			
-			Stateprovince modSP = stateprovinceRepository.getById(sp.getStateprovinceid());
-			modSP.setCountryregion(countryregionRepository.getById(sp.getCountryregion().getCountryregionid()));
-			modSP.setStateprovincecode(sp.getStateprovincecode());
-			modSP.setIsonlystateprovinceflag(sp.getIsonlystateprovinceflag());
-			modSP.setName(sp.getName());
-			
-			stateprovinceRepository.save(modSP);
-		}else {
-			throw new IllegalArgumentException("No se estan haciendo las validaciones correctas");
+		if(entity.getStateprovinceid() != null) {
+			Optional<Stateprovince> optinalEntity = stateprovinceRepository.findById(entity.getStateprovinceid());
+			if(optinalEntity.isPresent()) {
+				entityActual = save(entity,countryregionid);
+			}
 		}
+		
+		
+		return entityActual;
 		
 		
 	}
