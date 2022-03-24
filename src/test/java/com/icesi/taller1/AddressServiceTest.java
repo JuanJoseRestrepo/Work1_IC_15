@@ -132,7 +132,7 @@ public class AddressServiceTest {
 			Address address1 = new Address();
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("760008a");
+			address1.setPostalcode("760008");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);

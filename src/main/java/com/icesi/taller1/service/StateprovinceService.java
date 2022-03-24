@@ -41,12 +41,8 @@ public class StateprovinceService {
 				
 				entity.setCountryregion(optional.get());
 				aux = this.stateprovinceRepository.save(entity);
-			}else {
-				throw new IllegalArgumentException("No se estan haciendo las validaciones correctas");
 			}
 			
-		}else {
-			throw new IllegalArgumentException("No existe");
 		}
 		
 		return aux;

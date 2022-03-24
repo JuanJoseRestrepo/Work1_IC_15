@@ -21,14 +21,12 @@ public class CountryregionService {
 	public Countryregion save(Countryregion cr) {
 		
 		Countryregion aux = null;
-		boolean one = (cr.getCountryregioncode().length()>= 1 && cr.getCountryregioncode().length() <=4);
-		boolean two = cr.getName().length() >= 5;
+		boolean one = (cr.getCountryregioncode() != null) && (cr.getCountryregioncode().length()>= 1 && cr.getCountryregioncode().length() <=4);
+		boolean two = (cr.getName() != null) && (cr.getName().length() >= 5);
 		
 		
 		if (one && two) {
-			aux = countryregionRepository.save(cr);	
-		}else {
-			throw new IllegalArgumentException("No se estan haciendo las validaciones correctas");
+			aux = this.countryregionRepository.save(cr);	
 		}
 		
 		return aux;
@@ -42,11 +40,7 @@ public class CountryregionService {
 			Optional<Countryregion> optinalEntity = countryregionRepository.findById(entity.getCountryregionid());
 			if(optinalEntity.isPresent()) {
 				entityActual = save(entity);
-			}else {
-				throw new IllegalArgumentException("No se estan haciendo las validaciones correctas");
 			}
-		}else {
-			throw new IllegalArgumentException("No existe");
 		}
 		
 		return entityActual;

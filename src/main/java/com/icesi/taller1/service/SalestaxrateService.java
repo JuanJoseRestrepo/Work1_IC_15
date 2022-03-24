@@ -26,13 +26,13 @@ public class SalestaxrateService {
 		this.stateprovinceRepository = stateprovinceRepository;
 	}
 	
-	@Transactional
+
 	public Salestaxrate save(Salestaxrate entity, Integer stateprovinceid) {
 		
 		Salestaxrate aux1 = null;
 		
-		boolean one = entity.getTaxrate().doubleValue() >= 0;
-		boolean two =  entity.getName().length() >= 5;
+		boolean one = (entity.getTaxrate() != null) && (entity.getTaxrate().doubleValue() >= 0);
+		boolean two =  (entity.getName() != null) && entity.getName().length() >= 5;
 		
 		if(one && two) {
 			
@@ -46,10 +46,10 @@ public class SalestaxrateService {
 			
 		}
 		
+		
 		return aux1;
 	}
 	
-	@Transactional
 	public Salestaxrate update(Salestaxrate entity, Integer stateprovinceid) {
 		
 		Salestaxrate entidadActual = null;
@@ -60,6 +60,7 @@ public class SalestaxrateService {
 				entidadActual = save(entity,stateprovinceid);
 			}
 		}
+		
 		
 		return entidadActual;
 		

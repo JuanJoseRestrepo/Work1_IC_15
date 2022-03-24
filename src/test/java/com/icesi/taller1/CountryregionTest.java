@@ -1,7 +1,9 @@
 package com.icesi.taller1;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +23,6 @@ import com.icesi.taller1.repository.CountryregionRepository;
 import com.icesi.taller1.service.CountryregionService;
 
 @ContextConfiguration(classes = Taller1Application.class)
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class CountryregionTest {
 
@@ -32,8 +33,8 @@ public class CountryregionTest {
 	private CountryregionService countryregionService;
 	
 	@Nested
-	@Tag("create2")
-	class Create2 {
+	@Tag("create")
+	class Create {
 		
 		@Test
 		public void saveTestCorrect() {
@@ -52,6 +53,28 @@ public class CountryregionTest {
 			
 			verify(countryregionRepository).save(cr);
 		}
+		
+		@Test
+		public void saveTestWrongCode() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode("");
+			cr.setName("cinco");
+
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+	
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+			
+		}
+		
+		
+		
+		
 	}
 	
 }

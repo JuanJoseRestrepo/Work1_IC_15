@@ -33,7 +33,7 @@ public class AddressService{
 		
 		boolean addressline1V = (entity.getAddressline1() != null) && (!entity.getAddressline1().isBlank());
 		boolean cityV = (entity.getCity() != null) && (entity.getCity().length() >= 3);
-		boolean postalcodeV = String.valueOf(entity.getPostalcode()).length() == 6;
+		boolean postalcodeV = (entity.getPostalcode() != null) && (String.valueOf(entity.getPostalcode()).length() == 6);
 		
 		if(addressline1V && cityV && postalcodeV) {
 			
@@ -46,6 +46,7 @@ public class AddressService{
 				sAddress = this.addressRepository.save(entity);
 			}
 		}
+		
 		
 		return sAddress;
 	}
