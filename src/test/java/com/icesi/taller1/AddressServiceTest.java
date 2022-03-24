@@ -114,7 +114,7 @@ public class AddressServiceTest {
 			Address address1 = new Address();
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("   ");
+			address1.setPostalcode("  ");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -237,7 +237,7 @@ public class AddressServiceTest {
 			address1.setAddressid(1);
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("aaaaaaaa");
+			address1.setPostalcode("1");
 			
 			Address address2 = new Address();
 			
@@ -274,7 +274,8 @@ public class AddressServiceTest {
 			
 			verify(addressRepository).findById(1);
 			verify(addressRepository, times(0)).save(address1);
-		}	
+		}
+		
 	}
 	
 	

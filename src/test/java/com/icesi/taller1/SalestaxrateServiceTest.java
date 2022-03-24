@@ -73,7 +73,6 @@ public class SalestaxrateServiceTest {
 			sales.setTaxrate(new BigDecimal("124567890.0987654321").negate());
 			sales.setName("cinco");
 			
-			Stateprovince stateprovince1 = new Stateprovince();
 			
 			//Method
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
@@ -91,7 +90,6 @@ public class SalestaxrateServiceTest {
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("tres");
 			
-			Stateprovince stateprovince1 = new Stateprovince();
 			
 			//Method
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
@@ -107,8 +105,6 @@ public class SalestaxrateServiceTest {
 			Salestaxrate sales = new Salestaxrate();
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("RappiPromo");
-			
-			Stateprovince stateprovince1 = new Stateprovince();
 			
 			//Method
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
@@ -143,9 +139,76 @@ public class SalestaxrateServiceTest {
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
 			assertNotNull(salesSave);
+			assertEquals(new BigDecimal("124567890.0987654321"), salesSave.getTaxrate());
+			assertEquals("RappiPromo", salesSave.getName());
+			
+			verify(salestaxrateRepository).findById(1);
+			verify(stateprovinceRepository).findById(1);
+			verify(salestaxrateRepository).save(sales);
+		}
+		
+		@Test
+		public void updateTestWrongTaxRate() {
+			Salestaxrate sales = new Salestaxrate();
+			sales.setSalestaxrateid(1);
+			sales.setTaxrate(new BigDecimal("124567890.0987654321").negate());
+			sales.setName("RappiPromo");
+			
+			Salestaxrate saleAux = new Salestaxrate();
+			
+			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			
+			
+			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
+			
+			assertNull(salesSave);
+			
+			verify(salestaxrateRepository).findById(1);
+			verify(salestaxrateRepository,times(0)).save(sales);
 			
 		}
 		
+		@Test
+		public void updateTestWrongName() {
+			Salestaxrate sales = new Salestaxrate();
+			sales.setSalestaxrateid(1);
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName("tres");
+			
+			Salestaxrate saleAux = new Salestaxrate();
+			
+			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			
+			
+			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
+			
+
+			assertNull(salesSave);
+			
+			verify(salestaxrateRepository).findById(1);
+			verify(salestaxrateRepository,times(0)).save(sales);
+			
+		}
+		
+		
+		@Test
+		public void updateTestWrongStateProvince() {
+			Salestaxrate sales = new Salestaxrate();
+			sales.setSalestaxrateid(1);
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName("cinco");
+			
+			Salestaxrate saleAux = new Salestaxrate();
+			
+			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			
+			
+			Salestaxrate salesUpdate = salestaxrateService.update(sales, 1);
+			
+			assertNull(salesUpdate);
+			verify(salestaxrateRepository).findById(1);
+			verify(salestaxrateRepository,times(0)).save(sales);
+		}
 		
 	}
 	

@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.CountryregionRepository;
@@ -30,9 +29,13 @@ public class StateprovinceService {
 	public Stateprovince save(Stateprovince entity, Integer countryregionid) {
 		
 		Stateprovince aux = null;
-		boolean one = entity.getStateprovincecode().length() >= 5;
-		boolean two = entity.getIsonlystateprovinceflag().equals("Y") || entity.getIsonlystateprovinceflag().equals("N");
-		boolean three = entity.getName().length() >= 5;
+		boolean one = (entity.getStateprovincecode() != null) && (String.valueOf(entity.getStateprovincecode()).length() >= 5);
+		boolean two = (entity.getIsonlystateprovinceflag() != null) && entity.getIsonlystateprovinceflag().equals("Y") || entity.getIsonlystateprovinceflag().equals("N");
+		boolean three = (entity.getName() != null) && entity.getName().length() >= 5;
+		
+		if(entity.getStateprovincecode() != null && !entity.getStateprovincecode().isBlank()) {
+			int number = Integer.parseInt(entity.getStateprovincecode());
+		}
 		
 		if(one && two && three) {
 			Optional<Countryregion> optional = this.countryregionRepository.findById(countryregionid);

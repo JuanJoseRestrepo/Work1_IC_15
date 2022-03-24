@@ -7,6 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -72,7 +74,125 @@ public class CountryregionTest {
 			
 		}
 		
+		@Test
+		public void saveTestWrongName() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode("code");
+			cr.setName("tres");
+			
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+			
+		}
 		
+		@Test
+		public void saveTestWrongAllParameters() {
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode(null);
+			cr.setName(null);
+			
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+	}
+	
+	@Nested
+	@Tag("update")
+	class Update {
+		
+		@Test
+		public void updateTestCorrect() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode("code");
+			cr.setName("cinco");
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			when(countryregionRepository.save(cr)).thenReturn(cr);
+			
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNotNull(save);
+			assertEquals("code", save.getCountryregioncode());
+			assertEquals("cinco", save.getName());
+		
+			verify(countryregionRepository).save(cr);
+		}
+		
+		
+		@Test
+		public void updateTestWrongCode() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode("");
+			cr.setName("cinco");
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
+		public void updateTestWrongName() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode("code");
+			cr.setName("");
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+			
+		}
+		
+		@Test
+		public void updateTestWrongAllParameters() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode(null);
+			cr.setName(null);
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
 		
 		
 	}

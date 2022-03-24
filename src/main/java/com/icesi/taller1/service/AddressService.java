@@ -35,6 +35,10 @@ public class AddressService{
 		boolean cityV = (entity.getCity() != null) && (entity.getCity().length() >= 3);
 		boolean postalcodeV = (entity.getPostalcode() != null) && (String.valueOf(entity.getPostalcode()).length() == 6);
 		
+		if(entity.getPostalcode() != null && !entity.getPostalcode().isBlank()){
+			int number = Integer.parseInt(entity.getPostalcode());	
+		}
+		
 		if(addressline1V && cityV && postalcodeV) {
 			
 			Optional<Stateprovince> optional = this.stateprovinceRepository.findById(stateprovinceid);
