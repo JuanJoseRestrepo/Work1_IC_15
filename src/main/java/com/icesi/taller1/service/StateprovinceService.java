@@ -30,7 +30,7 @@ public class StateprovinceService {
 		
 		Stateprovince aux = null;
 		boolean one = (entity.getStateprovincecode() != null) && (String.valueOf(entity.getStateprovincecode()).length() >= 5);
-		boolean two = (entity.getIsonlystateprovinceflag() != null) && entity.getIsonlystateprovinceflag().equals("Y") || entity.getIsonlystateprovinceflag().equals("N");
+		boolean two = (entity.getIsonlystateprovinceflag() != null) && (entity.getIsonlystateprovinceflag().equals("Y") || entity.getIsonlystateprovinceflag().equals("N"));
 		boolean three = (entity.getName() != null) && entity.getName().length() >= 5;
 		
 		if(entity.getStateprovincecode() != null && !entity.getStateprovincecode().isBlank()) {

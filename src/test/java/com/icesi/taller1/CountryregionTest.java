@@ -75,6 +75,40 @@ public class CountryregionTest {
 		}
 		
 		@Test
+		public void saveTestWrongCodeToMuch() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode("012345");
+			cr.setName("cinco");
+
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+	
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
+		public void saveTestWrongCodeNull() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode(null);
+			cr.setName("cinco");
+
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+	
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
 		public void saveTestWrongName() {
 			//Set up
 			Countryregion cr = new Countryregion();
@@ -89,6 +123,38 @@ public class CountryregionTest {
 			
 			verify(countryregionRepository, times(0)).save(cr);
 			
+		}
+		
+		@Test
+		public void saveTestWrongNameNull() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode("code");
+			cr.setName(null);
+			
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
+		public void saveTestWrongEmpty() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregioncode("code");
+			cr.setName("");
+			
+			//Method
+			Countryregion save = countryregionService.save(cr);
+			
+			//Asserts
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
 		}
 		
 		@Test
@@ -156,7 +222,84 @@ public class CountryregionTest {
 		}
 		
 		@Test
+		public void updateTestWrongCodeToMuch() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode("012345");
+			cr.setName("cinco");
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
+		public void updateTestWrongCodeNull() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode(null);
+			cr.setName("cinco");
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
 		public void updateTestWrongName() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode("code");
+			cr.setName("a");
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+			
+		}
+		
+		@Test
+		public void updateTestWrongNameNull() {
+			//Set up
+			Countryregion cr = new Countryregion();
+			cr.setCountryregionid(1);
+			cr.setCountryregioncode("code");
+			cr.setName(null);
+			
+			Countryregion crAux = new Countryregion();
+			
+			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
+			
+			Countryregion save = countryregionService.update(cr);
+			
+			assertNull(save);
+			
+			verify(countryregionRepository, times(0)).save(cr);
+		}
+		
+		@Test
+		public void updateTestWrongNameEmpty() {
 			//Set up
 			Countryregion cr = new Countryregion();
 			cr.setCountryregionid(1);
@@ -172,7 +315,6 @@ public class CountryregionTest {
 			assertNull(save);
 			
 			verify(countryregionRepository, times(0)).save(cr);
-			
 		}
 		
 		@Test

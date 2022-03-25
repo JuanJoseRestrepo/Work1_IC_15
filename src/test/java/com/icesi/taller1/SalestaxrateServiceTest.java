@@ -83,12 +83,62 @@ public class SalestaxrateServiceTest {
 			verify(salestaxrateRepository, times(0)).save(sales);
 		}
 		
+		@Test
+		public void saveTestWrongTaxRateNull() {
+			//Set up
+			Salestaxrate sales = new Salestaxrate();
+			sales.setTaxrate(null);
+			sales.setName("cinco");
+			
+			
+			//Method
+			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
+			
+			assertNull(salesSave);
+			
+			verify(stateprovinceRepository,times(0)).findById(1);
+			verify(salestaxrateRepository, times(0)).save(sales);
+		}
+
+		
 	    @Test
 	    public void saveTestWrongName() {
 			//Set up
 			Salestaxrate sales = new Salestaxrate();
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("tres");
+			
+			
+			//Method
+			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
+			
+			assertNull(salesSave);
+			verify(stateprovinceRepository,times(0)).findById(1);
+			verify(salestaxrateRepository, times(0)).save(sales);
+	    }
+	    
+	    @Test
+	    public void saveTestWrongNameEmpty() {
+			//Set up
+			Salestaxrate sales = new Salestaxrate();
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName("");
+			
+			
+			//Method
+			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
+			
+			assertNull(salesSave);
+			verify(stateprovinceRepository,times(0)).findById(1);
+			verify(salestaxrateRepository, times(0)).save(sales);
+	    }
+	    
+	    @Test
+	    public void saveTestWrongNameNull() {
+			//Set up
+			Salestaxrate sales = new Salestaxrate();
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName(null);
 			
 			
 			//Method
@@ -169,6 +219,26 @@ public class SalestaxrateServiceTest {
 		}
 		
 		@Test
+		public void updateTestWrongTaxRateNull() {
+			Salestaxrate sales = new Salestaxrate();
+			sales.setSalestaxrateid(1);
+			sales.setTaxrate(null);
+			sales.setName("RappiPromo");
+			
+			Salestaxrate saleAux = new Salestaxrate();
+			
+			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			
+			
+			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
+			
+			assertNull(salesSave);
+			
+			verify(salestaxrateRepository).findById(1);
+			verify(salestaxrateRepository,times(0)).save(sales);
+		}
+		
+		@Test
 		public void updateTestWrongName() {
 			Salestaxrate sales = new Salestaxrate();
 			sales.setSalestaxrateid(1);
@@ -188,6 +258,48 @@ public class SalestaxrateServiceTest {
 			verify(salestaxrateRepository).findById(1);
 			verify(salestaxrateRepository,times(0)).save(sales);
 			
+		}
+		
+		@Test
+		public void updateTestWrongNameNull() {
+			Salestaxrate sales = new Salestaxrate();
+			sales.setSalestaxrateid(1);
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName(null);
+			
+			Salestaxrate saleAux = new Salestaxrate();
+			
+			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			
+			
+			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
+			
+
+			assertNull(salesSave);
+			
+			verify(salestaxrateRepository).findById(1);
+			verify(salestaxrateRepository,times(0)).save(sales);
+		}
+		
+		@Test
+		public void updateTestWrongEmpty() {
+			Salestaxrate sales = new Salestaxrate();
+			sales.setSalestaxrateid(1);
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName("");
+			
+			Salestaxrate saleAux = new Salestaxrate();
+			
+			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			
+			
+			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
+			
+
+			assertNull(salesSave);
+			
+			verify(salestaxrateRepository).findById(1);
+			verify(salestaxrateRepository,times(0)).save(sales);
 		}
 		
 		

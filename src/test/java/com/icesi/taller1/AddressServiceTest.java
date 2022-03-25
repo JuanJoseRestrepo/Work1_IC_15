@@ -89,9 +89,46 @@ public class AddressServiceTest {
 			verify(stateprovinceRepository, times(0)).findById(1);
 			verify(addressRepository, times(0)).save(address1);
 		}
+
 		
 		@Test
 		public void saveTestWrongCity() {
+			//Set Up
+			Address address1 = new Address();
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("Ca");
+			address1.setPostalcode("760008");
+			
+			//Method
+			Address addressSave =  addressService.save(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void saveTestWrongCityNull() {
+			//Set Up
+			Address address1 = new Address();
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity(null);
+			address1.setPostalcode("760008");
+			
+			//Method
+			Address addressSave =  addressService.save(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void saveTestWrongCityEmpty() {
 			//Set Up
 			Address address1 = new Address();
 			address1.setAddressline1("Calle 15 #121-25");
@@ -114,7 +151,7 @@ public class AddressServiceTest {
 			Address address1 = new Address();
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("  ");
+			address1.setPostalcode("1");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -126,6 +163,41 @@ public class AddressServiceTest {
 			verify(addressRepository, times(0)).save(address1);
 		}
 		
+		@Test
+		public void saveTestWrongPostalCodeNull() {
+			//Set Up
+			Address address1 = new Address();
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("Cali");
+			address1.setPostalcode(null);
+			
+			//Method
+			Address addressSave =  addressService.save(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);	
+		}
+		
+		@Test
+		public void saveTestWrongPostalCodeEmpty() {
+			//Set Up
+			Address address1 = new Address();
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("Cali");
+			address1.setPostalcode("");
+			
+			//Method
+			Address addressSave =  addressService.save(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);	
+		}
 		@Test
 		public void saveTestWrongStateprovince() {
 			//Set up
@@ -207,8 +279,58 @@ public class AddressServiceTest {
 			verify(addressRepository, times(0)).save(address1);
 		}
 		
+		
 		@Test
 		public void updateTestWrongCity() {
+			//Set up
+			Address address1 = new Address();
+			address1.setAddressid(1);
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("a");
+			address1.setPostalcode("760008");
+			
+			Address address2 = new Address();
+				
+			when(addressRepository.findById(1)).thenReturn(Optional.of(address2));
+			
+			//Method
+			Address addressSave =  addressService.update(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			
+			verify(addressRepository).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void updateTestWrongCityNull() {
+			//Set up
+			Address address1 = new Address();
+			address1.setAddressid(1);
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity(null);
+			address1.setPostalcode("760008");
+			
+			Address address2 = new Address();
+				
+			when(addressRepository.findById(1)).thenReturn(Optional.of(address2));
+			
+			//Method
+			Address addressSave =  addressService.update(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			
+			verify(addressRepository).findById(1);
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void updateTestWrongCityEmpty() {
 			//Set up
 			Address address1 = new Address();
 			address1.setAddressid(1);
@@ -250,6 +372,79 @@ public class AddressServiceTest {
 			assertNull(addressSave);
 			
 			verify(addressRepository).findById(1);
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void updateTestWrongPostalCodeToMuch() {
+			//Set up
+			Address address1 = new Address();
+			address1.setAddressid(1);
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("Cali");
+			address1.setPostalcode("1234567");
+			
+			Address address2 = new Address();
+			
+			when(addressRepository.findById(1)).thenReturn(Optional.of(address2));
+			
+			//Method
+			Address addressSave =  addressService.update(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(addressRepository).findById(1);
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void updateTestWrongPostalCodeNull() {
+			//Set up
+			Address address1 = new Address();
+			address1.setAddressid(1);
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("Cali");
+			address1.setPostalcode(null);
+			
+			Address address2 = new Address();
+			
+			when(addressRepository.findById(1)).thenReturn(Optional.of(address2));
+			
+			//Method
+			Address addressSave =  addressService.update(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(addressRepository).findById(1);
+			verify(stateprovinceRepository, times(0)).findById(1);
+			verify(addressRepository, times(0)).save(address1);
+		}
+		
+		@Test
+		public void updateTestWrongPostalCodeEmpty() {
+			//Set up
+			Address address1 = new Address();
+			address1.setAddressid(1);
+			address1.setAddressline1("Calle 15 #121-25");
+			address1.setCity("Cali");
+			address1.setPostalcode("");
+			
+			Address address2 = new Address();
+			
+			when(addressRepository.findById(1)).thenReturn(Optional.of(address2));
+			
+			//Method
+			Address addressSave =  addressService.update(address1, 1);
+			
+			//Asserts
+			assertNull(addressSave);
+			
+			verify(addressRepository).findById(1);
+			verify(stateprovinceRepository, times(0)).findById(1);
 			verify(addressRepository, times(0)).save(address1);
 		}
 		
