@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.repository.CountryregionRepository;
 
@@ -46,5 +48,8 @@ public class CountryregionService {
 		return entityActual;
 	}
 	
+	public Optional<Countryregion> findById(Integer id) {
+		return countryregionRepository.findById(id);
+	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.SalestaxrateRepository;
@@ -67,5 +68,8 @@ public class SalestaxrateService {
 		
 	}
 	
+	public Optional<Salestaxrate> findById(Integer id) {
+		return salestaxrateRepository.findById(id);
+	}
 	
 }

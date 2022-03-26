@@ -52,6 +52,8 @@ public class AddressService{
 		}
 		
 		
+		
+		
 		return sAddress;
 	}
 	
@@ -66,5 +68,9 @@ public class AddressService{
 		}
 		
 		return entityActual;
+	}
+	
+	public Optional<Address> findById(Integer id) {
+		return addressRepository.findById(id);
 	}
 }

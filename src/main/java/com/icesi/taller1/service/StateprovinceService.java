@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.CountryregionRepository;
@@ -63,11 +64,12 @@ public class StateprovinceService {
 			}
 		}
 		
-		
 		return entityActual;
-		
 		
 	}
 	
+	public Optional<Stateprovince> findById(Integer id) {
+		return stateprovinceRepository.findById(id);
+	}
 
 }
