@@ -96,7 +96,7 @@ public class AddressServiceTest {
 			//Set Up
 			Address address1 = new Address();
 			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("Ca");
+			address1.setCity("a");
 			address1.setPostalcode("760008");
 			
 			//Method
@@ -151,7 +151,7 @@ public class AddressServiceTest {
 			Address address1 = new Address();
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("1");
+			address1.setPostalcode("7600088");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -359,7 +359,7 @@ public class AddressServiceTest {
 			address1.setAddressid(1);
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("1");
+			address1.setPostalcode("76000");
 			
 			Address address2 = new Address();
 			
@@ -383,7 +383,7 @@ public class AddressServiceTest {
 			address1.setAddressid(1);
 			address1.setAddressline1("Calle 15 #121-25");
 			address1.setCity("Cali");
-			address1.setPostalcode("1234567");
+			address1.setPostalcode("7600088");
 			
 			Address address2 = new Address();
 			

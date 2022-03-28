@@ -154,7 +154,7 @@ public class SalestaxrateServiceTest {
 	    	//Set up
 			Salestaxrate sales = new Salestaxrate();
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
-			sales.setName("RappiPromo");
+			sales.setName("cinco");
 			
 			//Method
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
@@ -176,7 +176,7 @@ public class SalestaxrateServiceTest {
 			Salestaxrate sales = new Salestaxrate();
 			sales.setSalestaxrateid(1);
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
-			sales.setName("RappiPromo");
+			sales.setName("cinco");
 			
 			
 			Salestaxrate salesAux = new Salestaxrate();
@@ -190,7 +190,7 @@ public class SalestaxrateServiceTest {
 			
 			assertNotNull(salesSave);
 			assertEquals(new BigDecimal("124567890.0987654321"), salesSave.getTaxrate());
-			assertEquals("RappiPromo", salesSave.getName());
+			assertEquals("cinco", salesSave.getName());
 			
 			verify(salestaxrateRepository).findById(1);
 			verify(stateprovinceRepository).findById(1);
@@ -202,7 +202,7 @@ public class SalestaxrateServiceTest {
 			Salestaxrate sales = new Salestaxrate();
 			sales.setSalestaxrateid(1);
 			sales.setTaxrate(new BigDecimal("124567890.0987654321").negate());
-			sales.setName("RappiPromo");
+			sales.setName("cinco");
 			
 			Salestaxrate saleAux = new Salestaxrate();
 			
@@ -223,7 +223,7 @@ public class SalestaxrateServiceTest {
 			Salestaxrate sales = new Salestaxrate();
 			sales.setSalestaxrateid(1);
 			sales.setTaxrate(null);
-			sales.setName("RappiPromo");
+			sales.setName("cinco");
 			
 			Salestaxrate saleAux = new Salestaxrate();
 			

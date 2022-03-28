@@ -77,9 +77,9 @@ public class IntegrationTest {
 		public void saveTestCorrect() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("Cali");
-			address1.setPostalcode("760008");
+			address1.setAddressline1("Calle 5");
+			address1.setCity("Bogota");
+			address1.setPostalcode("760009");
 			
 			Stateprovince stateprovince1 = new Stateprovince();
 			stateprovinceRepository.save(stateprovince1);
@@ -89,9 +89,9 @@ public class IntegrationTest {
 			
 			//Asserts
 			assertNotNull(addressSave);
-			assertEquals("Calle 15 #121-25", addressSave.getAddressline1());
-			assertEquals("Cali", addressSave.getCity());
-			assertEquals("760008", addressSave.getPostalcode());
+			assertEquals("Calle 5", addressSave.getAddressline1());
+			assertEquals("Bogota", addressSave.getCity());
+			assertEquals("760009", addressSave.getPostalcode());
 			
 			Optional<Stateprovince> stateprovinceSave = stateprovinceRepository.findById(1);
 			
@@ -104,9 +104,9 @@ public class IntegrationTest {
 		public void saveTestWrongAddressline1() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("   ");
-			address1.setCity("Cali");
-			address1.setPostalcode("760008");
+			address1.setAddressline1(null);
+			address1.setCity("Bogota");
+			address1.setPostalcode("7600089");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -120,9 +120,9 @@ public class IntegrationTest {
 		public void saveTestWrongCity() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("");
-			address1.setPostalcode("760008");
+			address1.setAddressline1("Calle 5");
+			address1.setCity("a");
+			address1.setPostalcode("76000");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -137,9 +137,9 @@ public class IntegrationTest {
 		public void saveTestWrongPostalcode() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("Cali");
-			address1.setPostalcode("   ");
+			address1.setAddressline1("Calle 5");
+			address1.setCity("Bogota");
+			address1.setPostalcode("7600099");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -153,9 +153,9 @@ public class IntegrationTest {
 		public void saveTestWrongStateprovince() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("Cali");
-			address1.setPostalcode("760008");
+			address1.setAddressline1("Calle 5");
+			address1.setCity("Bogota");
+			address1.setPostalcode("760009");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 2);
@@ -169,9 +169,9 @@ public class IntegrationTest {
 		public void saveTestWrongCityNull() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
+			address1.setAddressline1("Calle 5");
 			address1.setCity(null);
-			address1.setPostalcode("760008");
+			address1.setPostalcode("760009");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -186,9 +186,9 @@ public class IntegrationTest {
 		public void saveTestWrongCityEmpty() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
+			address1.setAddressline1("Calle 5");
 			address1.setCity("");
-			address1.setPostalcode("760008");
+			address1.setPostalcode("760009");
 			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
@@ -202,8 +202,8 @@ public class IntegrationTest {
 		public void saveTestWrongPostalCodeNull() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("Cali");
+			address1.setAddressline1("Calle 5");
+			address1.setCity("Bogota");
 			address1.setPostalcode(null);
 			
 			//Method
@@ -218,8 +218,8 @@ public class IntegrationTest {
 		public void saveTestWrongPostalCodeEmpty() {
 			//Set up
 			Address address1 = new Address();
-			address1.setAddressline1("Calle 15 #121-25");
-			address1.setCity("Cali");
+			address1.setAddressline1("Calle 5");
+			address1.setCity("Bogota");
 			address1.setPostalcode("");
 			
 			//Method
@@ -302,7 +302,7 @@ public class IntegrationTest {
 			Address address1 = addressService.findById(1).get();
 			address1.setAddressline1("Calle 5");
 			address1.setCity("Bogota");
-			address1.setPostalcode("1");
+			address1.setPostalcode("7600099");
 			
 			//Method
 			Address addressSave =  addressService.update(address1, 2);
@@ -756,7 +756,7 @@ public class IntegrationTest {
 			Stateprovince state = new Stateprovince();
 			state.setStateprovincecode("12345");
 			state.setIsonlystateprovinceflag("Y");
-			state.setName("Sal");
+			state.setName("Cali");
 			
 			Stateprovince stateSave = stateprovinceService.save(state, 1);
 			
@@ -838,7 +838,7 @@ public class IntegrationTest {
 		@Order(2)
 		public void updateTestWrongStateprovinceCode() {
 			Stateprovince state = stateprovinceService.findById(1).get();
-			state.setStateprovincecode("1");
+			state.setStateprovincecode("123");
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Venezuela");
 			
@@ -1077,7 +1077,7 @@ public class IntegrationTest {
 	@Nested
 	@Tag("UpdateCountry")
 	@TestMethodOrder(OrderAnnotation.class)
-	public class updateCountry{
+	public class UpdateCountry{
 		
 		@Test
 		@Order(1)
