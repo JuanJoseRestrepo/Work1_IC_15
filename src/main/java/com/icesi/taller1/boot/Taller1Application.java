@@ -1,5 +1,7 @@
 package com.icesi.taller1.boot;
 
+import java.math.BigDecimal;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -11,9 +13,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.AddressRepository;
 import com.icesi.taller1.repository.CountryregionRepository;
+import com.icesi.taller1.repository.SalestaxrateRepository;
 import com.icesi.taller1.repository.StateprovinceRepository;
 
 @SpringBootApplication
@@ -29,10 +33,10 @@ public class Taller1Application {
 	
 	
 	@Bean
-	public CommandLineRunner add(CountryregionRepository crp, AddressRepository adr, StateprovinceRepository spr) {
+	public CommandLineRunner add(CountryregionRepository crp, AddressRepository adr, StateprovinceRepository spr, SalestaxrateRepository srp) {
 		return (args) -> {
 			
-			/*
+			
 			Countryregion cr = new Countryregion();
 			cr.setCountryregioncode("250");
 			cr.setName("Colombia");
@@ -53,8 +57,12 @@ public class Taller1Application {
 			adres.setPostalcode("123456");
 			adres.setStateprovince(state);
 			adr.save(adres);
-			*/
 			
+			Salestaxrate sales = new Salestaxrate();
+			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
+			sales.setName("cinco");
+			sales.setStateprovince(state);
+			srp.save(sales);
 			
 			
 		};
