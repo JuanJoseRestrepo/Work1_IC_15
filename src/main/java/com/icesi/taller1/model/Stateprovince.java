@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,6 +31,7 @@ public class Stateprovince implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STATEPROVINCE_STATEPROVINCEID_GENERATOR")
 	private Integer stateprovinceid;
 	
+	@NotBlank(groups = BasicInfo.class)
 	private String isonlystateprovinceflag;
 
 	private Timestamp modifieddate;

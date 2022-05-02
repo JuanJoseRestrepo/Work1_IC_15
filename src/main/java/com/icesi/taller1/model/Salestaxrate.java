@@ -42,6 +42,7 @@ public class Salestaxrate implements Serializable {
 	@JoinColumn(name = "stateprovinceid")
 	private Stateprovince stateprovince;
 	
+	@NotNull(groups = BasicInfo.class)
 	@PositiveOrZero(groups = BasicInfo.class)
 	private BigDecimal taxrate;
 

@@ -76,7 +76,7 @@ public class AdminController {
 		
 		if (countryregion == null)
 			throw new IllegalArgumentException("Invalid country Id:" + id);
-		
+			
 		model.addAttribute("countryregion", countryregion);
 		return "admin/updateCountry";
 	}
@@ -84,16 +84,17 @@ public class AdminController {
 	@PostMapping("/admin/country/edit/{id}")
 	public String updateCountry(@Validated(BasicInfo.class) @ModelAttribute Countryregion countryregion, BindingResult bindingResult, Model model,@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action) {
 		
-		if (action.equals("Cancelar")) {
+		if (action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
 			return "redirect:/admin/country/";
 		}
 		
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("countryregion", countryregion);
+			countryregion.setCountryregionid(id);
 			model.addAttribute("countries", countryregionService.findAll());
-			return "admin/indexCountry";
+			return "admin/updateCountry";
 		}
-		if (!action.equalsIgnoreCase("Cancel")) {
-			System.out.println("Hola");
+		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			countryregion.setCountryregionid(id);
 			countryregionService.update(countryregion);
 			model.addAttribute("countries", countryregionService.findAll());
@@ -118,17 +119,17 @@ public class AdminController {
 	@PostMapping("/admin/sales/add")
 	public String saveSales(@Validated(BasicInfo.class) @ModelAttribute Salestaxrate salestaxrate,BindingResult bindingResult,Model model,@RequestParam(value ="action",required = true) String action) {
 		
-		if (action.equals("Cancelar")) {
+		if (action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
 			return "redirect:/admin/sales/";
 		}
 		
-		if(bindingResult.hasErrors()) {
+		if(bindingResult.hasErrors()) {		
 			model.addAttribute("salesses", salestaxrateService.findAll());
 			model.addAttribute("provinces", stateprovinceService.findAll());
 	        return "admin/addSales";
 		}
 		
-		if (!action.equals("Cancelar")) {
+		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			
 			salestaxrateService.save(salestaxrate, salestaxrate.getStateprovince().getStateprovinceid());
 		}
@@ -149,17 +150,20 @@ public class AdminController {
 	
 	@PostMapping("/admin/sales/edit/{id}")
 	public String updateSales(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @Validated(BasicInfo.class) @ModelAttribute Salestaxrate salestaxrate, BindingResult bindingResult, Model model) {
-		
-		if (action.equals("Cancelar")) {
+
+		if (action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel") ) {
 			return "redirect:/admin/sales/";
 		}
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("salesses", salestaxrateService.findAll());
 			
-			return "admin/indexSales";
+			model.addAttribute("salestaxrate", salestaxrate);
+			salestaxrate.setSalestaxrateid(id);
+			model.addAttribute("salesses", salestaxrateService.findAll());
+			model.addAttribute("provinces", stateprovinceService.findAll());
+			return "admin/updateSales";
 		}
-		if (!action.equals("Cancel")) {
+		if (!action.equalsIgnoreCase("Cancel") || !action.equalsIgnoreCase("Cancelar")) {
 			salestaxrate.setSalestaxrateid(id);
 			salestaxrateService.update(salestaxrate,salestaxrate.getStateprovince().getStateprovinceid());
 			model.addAttribute("salesses", salestaxrateService.findAll());

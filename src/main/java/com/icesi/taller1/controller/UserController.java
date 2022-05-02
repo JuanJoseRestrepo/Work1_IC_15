@@ -49,7 +49,7 @@ public class UserController {
 	@PostMapping("/user/province/add")
 	public String saveProvince(@Validated(BasicInfo.class) @ModelAttribute Stateprovince stateprovince,BindingResult bindingResult,Model model,@RequestParam(value ="action",required = true) String action) {
 		
-		if(action.equals("Cancelar")) {
+		if(action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
 			model.addAttribute("stateprovince", stateprovinceService.findAll());
 			return "redirect:/user/province/";
 		}
@@ -59,7 +59,7 @@ public class UserController {
 	        return "user/addProvince";
 		}
 		
-		if (!action.equals("Cancelar")) {
+		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			stateprovinceService.save(stateprovince, stateprovince.getCountryregion().getCountryregionid());
 		}
 		return "redirect:/user/province/";
@@ -79,17 +79,19 @@ public class UserController {
 	
 	@PostMapping("/user/province/edit/{id}")
 	public String updateProvince(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @Validated(BasicInfo.class) @ModelAttribute Stateprovince stateprovince, BindingResult bindingResult, Model model) {
-		
-		if(action.equals("Cancel")) {
+
+		if(action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
+			System.out.println("Entre aca hola 1");
 			return "redirect:/user/province/";
 		}
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("stateprovince", stateprovinceService.findAll());
-			
-			return "user/indexProvince";
+			stateprovince.setStateprovinceid(id);
+			model.addAttribute("stateprovince", stateprovince);
+			model.addAttribute("countries", countryregionService.findAll());
+			return "user/updateProvince";
 		}
-		if (action != null && !action.equals("Cancel")) {
+		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			stateprovince.setStateprovinceid(id);
 			stateprovinceService.update(stateprovince,stateprovince.getCountryregion().getCountryregionid());
 			model.addAttribute("provinces", stateprovinceService.findAll());
@@ -114,7 +116,7 @@ public class UserController {
 	@PostMapping("/user/address/add")
 	public String saveCountry(@Validated(BasicInfo.class) @ModelAttribute Address address,BindingResult bindingResult,Model model,@RequestParam(value ="action",required = true) String action) {
 		
-		if(action.equals("Cancelar")) {
+		if(action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
 			return "redirect:/user/address/";
 		}
 		
@@ -125,7 +127,7 @@ public class UserController {
 	        return "user/addAddress";
 		}
 		
-		if (!action.equals("Cancelar")) {
+		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			
 			addressService.save(address, address.getStateprovince().getStateprovinceid());
 		}
@@ -146,16 +148,19 @@ public class UserController {
 	@PostMapping("/user/address/edit/{id}")
 	public String updateAddress(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action,@Validated(BasicInfo.class) @ModelAttribute Address address, BindingResult bindingResult, Model model) {
 		
-		if(action.equals("Cancel")) {
+		if(action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
 			return "redirect:/user/address/";
 		}
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("addresses", addressService.findAll());
 			
-			return "user/indexAddress";
+			model.addAttribute("address", address);
+			address.setAddressid(id);
+			model.addAttribute("addresses", addressService.findAll());
+			model.addAttribute("provinces", stateprovinceService.findAll());
+			return "user/updateAddress";
 		}
-		if (action != null && !action.equals("Cancel")) {
+		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			address.setAddressid(id);
 			addressService.update(address,address.getStateprovince().getStateprovinceid());
 			model.addAttribute("provinces", stateprovinceService.findAll());
