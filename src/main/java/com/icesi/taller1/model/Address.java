@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -28,15 +30,16 @@ public class Address implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_ADDRESSID_GENERATOR")
 	private Integer addressid;
 	
-	@NotBlank
+	@NotBlank(groups = BasicInfo.class)
 	private String addressline1;
 
 	private String addressline2;
-	@Size(min=3)
+	@Size(min=3,groups = BasicInfo.class)
 	private String city;
 
 	private Timestamp modifieddate;
-	@Size(min=6, max=6)
+	@Pattern(regexp="^(0|[1-9][0-9]*)$",groups = BasicInfo.class)
+	@Size(min=6, max=6,groups = BasicInfo.class)
 	private String postalcode;
 
 	private Integer rowguid;
@@ -44,6 +47,7 @@ public class Address implements Serializable {
 	private String spatiallocation;
 
 	// bi-directional many-to-one association to Stateprovince
+	@NotNull(groups = BasicInfo.class)
 	@ManyToOne
 	@JoinColumn(name = "stateprovinceid")
 	private Stateprovince stateprovince;

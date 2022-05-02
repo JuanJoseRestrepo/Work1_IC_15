@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.icesi.taller1.model.Address;
+import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.AddressRepository;
 import com.icesi.taller1.repository.StateprovinceRepository;
@@ -73,4 +74,13 @@ public class AddressService{
 	public Optional<Address> findById(Integer id) {
 		return addressRepository.findById(id);
 	}
+	
+	public Iterable<Address> findAll() {
+		return addressRepository.findAll();
+	}
+	
+	public Address getAddress(Integer id) {
+		return addressRepository.getById(id);
+	}
+	
 }

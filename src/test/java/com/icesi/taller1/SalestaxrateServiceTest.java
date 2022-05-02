@@ -59,7 +59,7 @@ public class SalestaxrateServiceTest {
 			assertNotNull(salesSave);
 			assertEquals(new BigDecimal("124567890.0987654321"), sales.getTaxrate());
 			assertEquals("cinco", sales.getName());
-			assertEquals(stateprovince1.getStateprovinceid(), salesSave.getStateprovinceid());
+			assertEquals(stateprovince1.getStateprovinceid(), salesSave.getStateprovince().getStateprovinceid());
 			
 			verify(stateprovinceRepository).findById(1);
 			verify(salestaxrateRepository).save(sales);

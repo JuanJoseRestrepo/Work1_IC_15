@@ -8,8 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
@@ -29,14 +32,17 @@ public class Salestaxrate implements Serializable {
 
 	private Timestamp modifieddate;
 	
-	@Size(min=5)
+	@Size(min=5,groups = BasicInfo.class)
 	private String name;
 
 	private Integer rowguid;
-
-	private Integer stateprovinceid;
 	
-	@PositiveOrZero
+	@NotNull(groups = BasicInfo.class)
+	@ManyToOne
+	@JoinColumn(name = "stateprovinceid")
+	private Stateprovince stateprovince;
+	
+	@PositiveOrZero(groups = BasicInfo.class)
 	private BigDecimal taxrate;
 
 	private Integer taxtype;
@@ -60,8 +66,12 @@ public class Salestaxrate implements Serializable {
 		return this.salestaxrateid;
 	}
 
-	public Integer getStateprovinceid() {
-		return this.stateprovinceid;
+	public Stateprovince getStateprovince() {
+		return stateprovince;
+	}
+
+	public void setStateprovince(Stateprovince stateprovince) {
+		this.stateprovince = stateprovince;
 	}
 
 	public BigDecimal getTaxrate() {
@@ -86,10 +96,6 @@ public class Salestaxrate implements Serializable {
 
 	public void setSalestaxrateid(Integer salestaxrateid) {
 		this.salestaxrateid = salestaxrateid;
-	}
-
-	public void setStateprovinceid(Integer stateprovinceid) {
-		this.stateprovinceid = stateprovinceid;
 	}
 
 	public void setTaxrate(BigDecimal taxrate) {

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 /**
@@ -27,7 +29,7 @@ public class Countryregion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUNTRYREGION_COUNTRYREGIONCODE_GENERATOR")
 	private Integer countryregionid;
 	
-	@Size(min = 1,max =4)
+	@Size(min = 1,max =4, groups = BasicInfo.class)
 	private String countryregioncode;
 
 	public Integer getCountryregionid() {
@@ -40,6 +42,7 @@ public class Countryregion implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@NotBlank(groups = BasicInfo.class)
 	private String name;
 
 	// bi-directional many-to-one association to Stateprovince

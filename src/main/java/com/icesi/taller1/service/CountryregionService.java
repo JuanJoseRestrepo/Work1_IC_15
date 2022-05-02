@@ -1,7 +1,9 @@
 package com.icesi.taller1.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.aspectj.weaver.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,7 @@ public class CountryregionService {
 			aux = this.countryregionRepository.save(cr);	
 		}
 		
-		return aux;
+		return aux;	
 		
 	}
 	
@@ -50,6 +52,14 @@ public class CountryregionService {
 	
 	public Optional<Countryregion> findById(Integer id) {
 		return countryregionRepository.findById(id);
+	}
+	
+	public Iterable<Countryregion> findAll() {
+		return countryregionRepository.findAll();
+	}
+	
+	public Countryregion getCountryRegion(Integer id) {
+		return countryregionRepository.getById(id);
 	}
 	
 }

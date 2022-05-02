@@ -53,6 +53,7 @@ public class StateprovinceService {
 		
 	}
 	
+	
 	@Transactional
 	public Stateprovince update(Stateprovince entity, Integer countryregionid) {
 		Stateprovince entityActual = null;
@@ -70,6 +71,15 @@ public class StateprovinceService {
 	
 	public Optional<Stateprovince> findById(Integer id) {
 		return stateprovinceRepository.findById(id);
+	}
+
+	public Iterable<Stateprovince> findAll() {
+		return stateprovinceRepository.findAll();
+	}
+
+	public Stateprovince getStateProvince(Integer id) {
+		
+		return stateprovinceRepository.getById(id);
 	}
 
 }

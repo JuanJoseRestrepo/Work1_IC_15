@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.icesi.taller1.model.Address;
+import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.SalestaxrateRepository;
@@ -42,7 +43,7 @@ public class SalestaxrateService {
 			
 			if(optional.isPresent()) {
 				
-				entity.setStateprovinceid(optional.get().getStateprovinceid());
+				entity.setStateprovince(optional.get());
 				aux1 = this.salestaxrateRepository.save(entity);
 			}
 			
@@ -71,5 +72,15 @@ public class SalestaxrateService {
 	public Optional<Salestaxrate> findById(Integer id) {
 		return salestaxrateRepository.findById(id);
 	}
+	
+	public Iterable<Salestaxrate> findAll() {
+		return salestaxrateRepository.findAll();
+	}
+	
+	public Salestaxrate getSalestaxrate(Integer id) {
+		
+		return salestaxrateRepository.getById(id);
+	}
+
 	
 }

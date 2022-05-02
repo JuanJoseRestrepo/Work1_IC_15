@@ -430,7 +430,7 @@ public class IntegrationTest {
 			
 			Optional<Stateprovince> stateprovinceSave = stateprovinceRepository.findById(1);
 			
-			assertEquals(saveSales.getStateprovinceid(), stateprovinceSave.get().getStateprovinceid());
+			assertEquals(saveSales.getStateprovince().getStateprovinceid(), stateprovinceSave.get().getStateprovinceid());
 		}
 		
 		@Test
@@ -547,7 +547,7 @@ public class IntegrationTest {
 			
 			Optional<Stateprovince> stateprovinceSave = stateprovinceRepository.findById(1);
 			
-			assertEquals(saveSales.getStateprovinceid(), stateprovinceSave.get().getStateprovinceid());
+			assertEquals(saveSales.getStateprovince().getStateprovinceid(), stateprovinceSave.get().getStateprovinceid());
 		}
 		
 		@Test

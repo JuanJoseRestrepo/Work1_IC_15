@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -33,12 +34,13 @@ public class Stateprovince implements Serializable {
 
 	private Timestamp modifieddate;
 	
-	@Size(min=5)
+	@Size(min=5,groups = BasicInfo.class)
 	private String name;
 
 	private Integer rowguid;
 	
-	@Size(min=5, max=5)
+	@NotNull(groups = BasicInfo.class)
+	@Size(min=5, max=5,groups = BasicInfo.class)
 	private String stateprovincecode;
 
 	private Integer territoryid;
@@ -48,6 +50,7 @@ public class Stateprovince implements Serializable {
 	private List<Address> addresses;
 
 	// bi-directional many-to-one association to Countryregion
+	@NotNull(groups = BasicInfo.class)
 	@ManyToOne
 	@JoinColumn(name = "countryregioncode")
 	private Countryregion countryregion;
