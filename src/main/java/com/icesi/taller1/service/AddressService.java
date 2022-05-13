@@ -4,6 +4,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.taller1.dao.AddressDAO;
+import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
@@ -15,16 +17,14 @@ import com.icesi.taller1.repository.StateprovinceRepository;
 @Service
 public class AddressService{
 	
-	//MainRepo
-	private AddressRepository addressRepository;
-	//OtherRepos
-	private StateprovinceRepository stateprovinceRepository;
+	private AddressDAO addressDao;
+	private StateprovinceDAO stateprovinceDao;
 	
 	//Constructor
 	@Autowired
-	public AddressService(AddressRepository addressRepository, StateprovinceRepository stateprovinceRepository) {
-		this.addressRepository = addressRepository;
-		this.stateprovinceRepository = stateprovinceRepository;
+	public AddressService(AddressDAO addressDao, StateprovinceDAO stateprovinceDao) {
+		this.addressDao = addressDao;
+		this.stateprovinceDao = stateprovinceDao;
 	}
 	
 	//Methods
@@ -42,13 +42,13 @@ public class AddressService{
 		
 		if(addressline1V && cityV && postalcodeV) {
 			
-			Optional<Stateprovince> optional = this.stateprovinceRepository.findById(stateprovinceid);
+			Optional<Stateprovince> optional = Optional.of(this.stateprovinceDao.findById(stateprovinceid));
 			
 			if(optional.isPresent()) {
 				
 				entity.setStateprovince(optional.get());
 				
-				sAddress = this.addressRepository.save(entity);
+				sAddress = this.addressDao.save(entity);
 			}
 		}
 		
@@ -62,7 +62,7 @@ public class AddressService{
 		Address entityActual = null;
 		
 		if(entity.getAddressid() != null) {
-			Optional<Address> optinalEntity = addressRepository.findById(entity.getAddressid());
+			Optional<Address> optinalEntity = Optional.of(addressDao.findById(entity.getAddressid()));
 			if(optinalEntity.isPresent()) {
 				entityActual = save(entity, stateprovinceid);
 			}
@@ -72,15 +72,15 @@ public class AddressService{
 	}
 	
 	public Optional<Address> findById(Integer id) {
-		return addressRepository.findById(id);
+		return Optional.of(addressDao.findById(id));
 	}
 	
 	public Iterable<Address> findAll() {
-		return addressRepository.findAll();
+		return addressDao.findAll();
 	}
 	
 	public Address getAddress(Integer id) {
-		return addressRepository.getById(id);
+		return addressDao.findById(id);
 	}
 	
 }
