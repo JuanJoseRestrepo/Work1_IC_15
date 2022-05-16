@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.taller1.boot.Taller1Application;
 import com.icesi.taller1.dao.AddressDAO;
@@ -53,6 +55,7 @@ public class TestAddressDAO {
 	class DaoTestAddress{
 		@Test
 		@Order(1)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void saveTestDaoAddress() {
 				initDao();
 				assertNotNull(addressDAO);
@@ -62,13 +65,16 @@ public class TestAddressDAO {
 		
 		@Test
 		@Order(2)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void updateTestDaoAddress() {
 				initDao();
 				assertNotNull(addressDAO);
 				addressDAO.save(address);
+				
 				address.setAddressline1("Calle 15 #121-25");
 				address.setCity("Cali");
 				address.setPostalcode("760008");
+				
 				addressDAO.update(address);
 				
 				Address changed = addressDAO.findById(address.getAddressid());
@@ -82,6 +88,7 @@ public class TestAddressDAO {
 		
 		@Test
 		@Order(3)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void deleteTestDaoAddress() {
 			initDao();
 			assertNotNull(addressDAO);
@@ -96,6 +103,7 @@ public class TestAddressDAO {
 		
 		@Test
 		@Order(4)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findAllTestDaoAddress() {
 			initDao();
 			assertNotNull(addressDAO);
@@ -108,6 +116,7 @@ public class TestAddressDAO {
 		
 		@Test
 		@Order(5)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findStateProvinceTestDaoAddress() {
 			initDao();
 			assertNotNull(addressDAO);
@@ -127,6 +136,7 @@ public class TestAddressDAO {
 		
 		@Test
 		@Order(6)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findCityTestDaoAddress() {
 			initDao();
 			assertNotNull(addressDAO);
@@ -147,6 +157,7 @@ public class TestAddressDAO {
 		
 		@Test
 		@Order(7)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findAddressTestDaoAddress() {
 			initDao();
 			assertNotNull(addressDAO);

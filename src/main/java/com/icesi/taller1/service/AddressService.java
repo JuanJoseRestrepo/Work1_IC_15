@@ -42,7 +42,7 @@ public class AddressService{
 		
 		if(addressline1V && cityV && postalcodeV) {
 			
-			Optional<Stateprovince> optional = Optional.of(this.stateprovinceDao.findById(stateprovinceid));
+			Optional<Stateprovince> optional = Optional.of(stateprovinceDao.findById(stateprovinceid));
 			
 			if(optional.isPresent()) {
 				
