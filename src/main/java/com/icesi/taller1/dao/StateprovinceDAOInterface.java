@@ -6,9 +6,9 @@ import com.icesi.taller1.model.Stateprovince;
 
 public interface StateprovinceDAOInterface {
 
-	public Stateprovince getStateprovinceById(Integer id);
-	public Stateprovince getStateprovinceByTerritoryId(Integer id);
-	public Stateprovince getStateprovinceByName(String name);
+	public List<Stateprovince> getStateprovinceById(Integer id);
+	public List<Stateprovince> getStateprovinceByTerritoryId(Integer id);
+	public List<Stateprovince> getStateprovinceByName(String name);
 	public void save(Stateprovince entity);
 	public void update(Stateprovince entity);
 	public void delete(Stateprovince entity);

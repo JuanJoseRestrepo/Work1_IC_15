@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -47,33 +46,24 @@ public class StateprovinceDAO implements StateprovinceDAOInterface {
 	@Override
 	public List<Stateprovince> findAll() {
 		String jpql = "Select a from Stateprovince a";
-		return 	entityManager.createQuery(jpql).getResultList();	
+		return 	entityManager.createQuery(jpql,Stateprovince.class).getResultList();	
 	}
 
 	@Override
-	public Stateprovince getStateprovinceById(Integer id) {
-		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.countryregion.countryregionid =:id";
-		Query query = entityManager.createQuery(jpql);
-		query.setParameter("id", id);
-		Stateprovince stateprovince = (Stateprovince) query.getSingleResult();
-		return stateprovince;
+	public List<Stateprovince> getStateprovinceById(Integer id) {
+		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.countryregion.countryregionid = '"+id+"'";
+		return entityManager.createQuery(jpql,Stateprovince.class).getResultList();
 	}
 
 	@Override
-	public Stateprovince getStateprovinceByTerritoryId(Integer id) {
-		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.territoryid =:id";
-		Query query = entityManager.createQuery(jpql);
-		query.setParameter("id", id);
-		Stateprovince stateprovince = (Stateprovince) query.getSingleResult();
-		return stateprovince;
+	public List<Stateprovince> getStateprovinceByTerritoryId(Integer id) {
+		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.territoryid =: '"+id+"'";
+		return entityManager.createQuery(jpql,Stateprovince.class).getResultList();
 	}
 
 	@Override
-	public Stateprovince getStateprovinceByName(String name) {
-		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.name =:name";
-		Query query = entityManager.createQuery(jpql);
-		query.setParameter("name", name);
-		Stateprovince stateprovince = (Stateprovince) query.getSingleResult();
-		return stateprovince;
+	public List<Stateprovince> getStateprovinceByName(String name) {
+		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.name = '"+name+"'";
+		return entityManager.createQuery(jpql,Stateprovince.class).getResultList();
 	}
 }

@@ -7,8 +7,8 @@ import com.icesi.taller1.model.Address;
 public interface AddressDAOInterface {
 
 	public List<Address> getListAddressByAlmostTwoHeadsBySales();
-	public Address getAddressByStateprovinceId(Integer id);
-	public Address getAddressByCity(String city);
+	public List<Address> getAddressByStateprovinceId(Integer id);
+	public List<Address> getAddressByCity(String city);
 	public Address save(Address entity);
 	public void update(Address entity);
 	public void delete(Address entity);

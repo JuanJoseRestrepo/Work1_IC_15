@@ -51,24 +51,18 @@ public class SalestaxrateDAO implements SalestaxrateDAOInterface {
 	@Override
 	public List<Salestaxrate> findAll() {
 		String jpql = "Select a from Salestaxrate a";
-		return 	entityManager.createQuery(jpql).getResultList();	
+		return 	entityManager.createQuery(jpql,Salestaxrate.class).getResultList();	
 	}
 
 	@Override
-	public Salestaxrate getSalestaxrateByStateprovince(Integer id) {
-		String jpql = "SELECT sr FROM Salestaxrate sr WHERE sr.stateprovince.stateprovinceid =:id";
-		Query query = entityManager.createQuery(jpql);
-		query.setParameter("id", id);
-		Salestaxrate salestaxrate = (Salestaxrate) query.getSingleResult();
-		return salestaxrate;
+	public List<Salestaxrate> getSalestaxrateByStateprovince(Integer id) {
+		String jpql = "SELECT str FROM Salestaxrate str WHERE str.stateprovince.stateprovinceid = '"+id+"'";
+		return entityManager.createQuery(jpql,Salestaxrate.class).getResultList();
 	}
 
 	@Override
-	public Salestaxrate getSalestaxrateByName(String name) {
-		String jpql = "SELECT sr FROM Salestaxrate sr WHERE sr.name =:name";
-		Query query = entityManager.createQuery(jpql);
-		query.setParameter("name", name);
-		Salestaxrate salestaxrate = (Salestaxrate) query.getSingleResult();
-		return salestaxrate;
+	public List<Salestaxrate> getSalestaxrateByName(String name) {
+		String jpql = "SELECT str FROM Salestaxrate str WHERE str.name = '"+ name + "'";
+		return entityManager.createQuery(jpql,Salestaxrate.class).getResultList();
 	}
 }

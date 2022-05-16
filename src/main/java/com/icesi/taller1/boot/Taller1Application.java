@@ -24,7 +24,7 @@ import com.icesi.taller1.repository.StateprovinceRepository;
 @EnableJpaRepositories("com.icesi.taller1.repository")
 @EnableAutoConfiguration
 @EntityScan(basePackages= {"com.icesi.taller1.model"})
-@ComponentScan(basePackages = {"com.icesi.taller1.repository","com.icesi.taller1.controller","com.icesi.taller1.service","com.icesi.taller1.authentication"} )
+@ComponentScan(basePackages = {"com.icesi.taller1.repository","com.icesi.taller1.controller","com.icesi.taller1.service","com.icesi.taller1.authentication", "com.icesi.taller1.dao"} )
 public class Taller1Application {
 
 	public static void main(String[] args) {

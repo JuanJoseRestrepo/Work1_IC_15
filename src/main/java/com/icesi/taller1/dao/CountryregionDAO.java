@@ -46,7 +46,7 @@ public class CountryregionDAO implements CountryregionDAOInterface {
 	@Override
 	public List<Countryregion> findAll() {
 		String jpql = "Select a from Countryregion a";
-		return 	entityManager.createQuery(jpql).getResultList();
+		return 	entityManager.createQuery(jpql,Countryregion.class).getResultList();
 	}
 
 }
