@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import com.icesi.taller1.model.Address;
-import com.icesi.taller1.model.Stateprovince;
 
 @Repository
 @Scope("singleton")
@@ -35,8 +33,9 @@ public class AddressDAO implements AddressDAOInterface {
 
 	@Override
 	@Transactional
-	public void update(Address entity) {
+	public Address update(Address entity) {
 		entityManager.merge(entity);
+		return entity;
 	}
 
 	@Override

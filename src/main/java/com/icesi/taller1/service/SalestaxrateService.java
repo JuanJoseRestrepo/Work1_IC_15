@@ -5,25 +5,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.icesi.taller1.model.Address;
-import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.dao.SalestaxrateDAO;
+import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
-import com.icesi.taller1.repository.SalestaxrateRepository;
-import com.icesi.taller1.repository.StateprovinceRepository;
 
 @Service
 public class SalestaxrateService {
 
 	//MainRepo
-	private SalestaxrateRepository salestaxrateRepository;
+	private SalestaxrateDAO salestaxrateDAO;
 	//OtherRepos
-	private StateprovinceRepository stateprovinceRepository;
+	private StateprovinceDAO stateprovinceRepository;
 	
 	//Constructor
 	@Autowired
-	public SalestaxrateService(SalestaxrateRepository salestaxrateRepository,StateprovinceRepository stateprovinceRepository) {
-		this.salestaxrateRepository = salestaxrateRepository;
+	public SalestaxrateService(SalestaxrateDAO salestaxrateRepository,StateprovinceDAO stateprovinceRepository) {
+		this.salestaxrateDAO = salestaxrateRepository;
 		this.stateprovinceRepository = stateprovinceRepository;
 	}
 	
@@ -39,14 +37,18 @@ public class SalestaxrateService {
 		
 		if(one && two) {
 			
-			Optional<Stateprovince> optional = this.stateprovinceRepository.findById(stateprovinceid);
+			Optional<Stateprovince> optional = Optional.ofNullable(this.stateprovinceRepository.findById(stateprovinceid));
 			
 			if(optional.isPresent()) {
 				
 				entity.setStateprovince(optional.get());
-				aux1 = this.salestaxrateRepository.save(entity);
+				aux1 = this.salestaxrateDAO.save(entity);
+			}else {
+				return aux1 = null;
 			}
 			
+		}else {
+			return aux1 = null;
 		}
 		
 		
@@ -55,31 +57,40 @@ public class SalestaxrateService {
 	
 	public Salestaxrate update(Salestaxrate entity, Integer stateprovinceid) {
 		
-		Salestaxrate entidadActual = null;
-		
+		boolean one = (entity.getTaxrate() != null) && (entity.getTaxrate().doubleValue() >= 0);
+		boolean two =  (entity.getName() != null) && entity.getName().length() >= 5;
+
+		if(one && two) {
 		if(entity.getSalestaxrateid() != null) {
-			Optional<Salestaxrate> optinalEntity = salestaxrateRepository.findById(entity.getSalestaxrateid());
-			if(optinalEntity.isPresent()) {
-				entidadActual = save(entity,stateprovinceid);
+			Optional<Stateprovince> optional = Optional.ofNullable(this.stateprovinceRepository.findById(stateprovinceid));
+			Optional<Salestaxrate> optinalEntity = Optional.ofNullable(this.salestaxrateDAO.findById(entity.getSalestaxrateid()));
+			if(optinalEntity.isPresent() && optional.isPresent()) {
+				entity.setStateprovince(optional.get());
+				entity = this.salestaxrateDAO.update(entity);
+			}else {
+				return entity = null;
 			}
+			
+		}
+	 }else {
+			return entity = null;
 		}
 		
 		
-		return entidadActual;
+		return entity;
 		
 	}
 	
 	public Optional<Salestaxrate> findById(Integer id) {
-		return salestaxrateRepository.findById(id);
+		return Optional.ofNullable(salestaxrateDAO.findById(id));
 	}
 	
 	public Iterable<Salestaxrate> findAll() {
-		return salestaxrateRepository.findAll();
+		return salestaxrateDAO.findAll();
 	}
 	
 	public Salestaxrate getSalestaxrate(Integer id) {
-		
-		return salestaxrateRepository.getById(id);
+		return salestaxrateDAO.findById(id);
 	}
 
 	

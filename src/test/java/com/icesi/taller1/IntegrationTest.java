@@ -1,10 +1,8 @@
 package com.icesi.taller1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -17,7 +15,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -158,7 +155,7 @@ public class IntegrationTest {
 			address1.setPostalcode("760009");
 			
 			//Method
-			Address addressSave =  addressService.save(address1, 2);
+			Address addressSave =  addressService.save(address1, 20);
 			
 			//Asserts
 			assertNull(addressSave);
@@ -248,7 +245,7 @@ public class IntegrationTest {
 			stateprovinceRepository.save(stateprovince1);
 			
 			//Method
-			Address addressSave =  addressService.update(address1, 2);
+			Address addressSave =  addressService.update(address1, 1);
 			
 			//Asserts
 			assertNotNull(addressSave);
@@ -256,7 +253,7 @@ public class IntegrationTest {
 			assertEquals("Bogota", addressSave.getCity());
 			assertEquals("760009", addressSave.getPostalcode());
 
-			Optional<Stateprovince> stateprovinceSave = stateprovinceRepository.findById(2);
+			Optional<Stateprovince> stateprovinceSave = stateprovinceRepository.findById(1);
 			
 			assertEquals(addressSave.getStateprovince().getStateprovinceid(), stateprovinceSave.get().getStateprovinceid());
 			//assertEquals(stateprovinceSave.get().getAddresses().get(0).getAddressid(), addressSave.getAddressid());
@@ -274,9 +271,8 @@ public class IntegrationTest {
 			
 			//Method
 			Address addressSave =  addressService.update(address1, 2);
-			
 			//Asserts
-			assertNull(addressSave);
+			assertEquals(addressSave, null);
 		}
 		
 		@Test
@@ -289,7 +285,7 @@ public class IntegrationTest {
 			address1.setPostalcode("760009");
 			
 			//Method
-			Address addressSave =  addressService.update(address1, 2);
+			Address addressSave =  addressService.update(address1, 200);
 			
 			//Asserts
 			assertNull(addressSave);
@@ -321,7 +317,7 @@ public class IntegrationTest {
 			address1.setPostalcode("760009");
 			
 			//Method
-			Address addressSave =  addressService.update(address1, 300);
+			Address addressSave =  addressService.update(address1, 20);
 			
 			//Asserts
 			assertNull(addressSave);

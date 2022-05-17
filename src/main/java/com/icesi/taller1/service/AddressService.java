@@ -7,13 +7,7 @@ import org.springframework.stereotype.Service;
 import com.icesi.taller1.dao.AddressDAO;
 import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Address;
-import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
-import com.icesi.taller1.repository.AddressRepository;
-import com.icesi.taller1.repository.StateprovinceRepository;
-
-
-
 @Service
 public class AddressService{
 	
@@ -42,14 +36,18 @@ public class AddressService{
 		
 		if(addressline1V && cityV && postalcodeV) {
 			
-			Optional<Stateprovince> optional = Optional.of(stateprovinceDao.findById(stateprovinceid));
+			Optional<Stateprovince> optional = Optional.ofNullable(this.stateprovinceDao.findById(stateprovinceid));
 			
 			if(optional.isPresent()) {
 				
 				entity.setStateprovince(optional.get());
 				
 				sAddress = this.addressDao.save(entity);
+			}else {
+				return sAddress = null;
 			}
+		}else {
+			return sAddress = null;
 		}
 		
 		
@@ -59,20 +57,36 @@ public class AddressService{
 	}
 	
 	public Address update(Address entity, Integer stateprovinceid) {
-		Address entityActual = null;
+
+		boolean addressline1V = (entity.getAddressline1() != null) && (!entity.getAddressline1().isBlank());
+		boolean cityV = (entity.getCity() != null) && (entity.getCity().length() >= 3);
+		boolean postalcodeV = (entity.getPostalcode() != null) && (String.valueOf(entity.getPostalcode()).length() == 6);
 		
-		if(entity.getAddressid() != null) {
-			Optional<Address> optinalEntity = Optional.of(addressDao.findById(entity.getAddressid()));
-			if(optinalEntity.isPresent()) {
-				entityActual = save(entity, stateprovinceid);
-			}
+		if(entity.getPostalcode() != null && !entity.getPostalcode().isBlank()){
+			int number = Integer.parseInt(entity.getPostalcode());	
 		}
 		
-		return entityActual;
-	}
+		if(addressline1V && cityV && postalcodeV) {
+		if(entity.getAddressid() != null) {
+			Optional<Address> optinalEntity = Optional.ofNullable(this.addressDao.findById(entity.getAddressid()));
+			Optional<Stateprovince> optional = Optional.ofNullable(this.stateprovinceDao.findById(stateprovinceid));
+			if(optinalEntity.isPresent() && optional.isPresent()) {
+				entity.setStateprovince(optional.get());
+				entity = addressDao.update(entity);
+				
+			}else {
+				return entity = null;
+			}
+	      }
+		}else {
+			return entity = null;
+		}
+		
+		return entity;
+	} 
 	
 	public Optional<Address> findById(Integer id) {
-		return Optional.of(addressDao.findById(id));
+		return Optional.ofNullable(this.addressDao.findById(id));
 	}
 	
 	public Iterable<Address> findAll() {

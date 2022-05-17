@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,26 +25,31 @@ public class CountryregionDAO implements CountryregionDAOInterface {
 	}
 	
 	@Override
+	@Transactional
 	public void save(Countryregion entity) {
 		entityManager.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public void update(Countryregion entity) {
 		entityManager.merge(entity);
 	}
 
 	@Override
+	@Transactional
 	public void delete(Countryregion entity) {
 		entityManager.remove(entity);
 	}
 
 	@Override
+	@Transactional
 	public Countryregion findById(Integer codigo) {
 		return entityManager.find(Countryregion.class, codigo);
 	}
 
 	@Override
+	@Transactional
 	public List<Countryregion> findAll() {
 		String jpql = "Select a from Countryregion a";
 		return 	entityManager.createQuery(jpql,Countryregion.class).getResultList();

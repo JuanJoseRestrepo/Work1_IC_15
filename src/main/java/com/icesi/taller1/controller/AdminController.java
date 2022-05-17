@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Salestaxrate;
-import com.icesi.taller1.model.Stateprovince;
-import com.icesi.taller1.service.AddressService;
 import com.icesi.taller1.service.CountryregionService;
 import com.icesi.taller1.service.SalestaxrateService;
 import com.icesi.taller1.service.StateprovinceService;

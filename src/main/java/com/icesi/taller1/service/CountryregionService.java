@@ -1,13 +1,10 @@
 package com.icesi.taller1.service;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.aspectj.weaver.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.repository.CountryregionRepository;
 

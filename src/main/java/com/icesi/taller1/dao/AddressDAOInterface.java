@@ -10,7 +10,7 @@ public interface AddressDAOInterface {
 	public List<Address> getAddressByStateprovinceId(Integer id);
 	public List<Address> getAddressByCity(String city);
 	public Address save(Address entity);
-	public void update(Address entity);
+	public Address update(Address entity);
 	public void delete(Address entity);
 	public Address findById(Integer codigo);
 	public List<Address> findAll();

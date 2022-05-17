@@ -17,8 +17,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.icesi.taller1.dao.SalestaxrateDAO;
+import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.SalestaxrateRepository;
@@ -32,10 +35,15 @@ public class SalestaxrateServiceTest {
 	@InjectMocks
 	private SalestaxrateService salestaxrateService;
 	@Mock
-	private SalestaxrateRepository salestaxrateRepository;
+	private SalestaxrateDAO salestaxrateDAO;
 	@Mock
-	private StateprovinceRepository stateprovinceRepository;
+	private StateprovinceDAO stateprovinceDAO;
 	
+	
+	@Autowired
+	public SalestaxrateServiceTest() {
+		
+	}
 	
 	@Nested
 	@Tag("create")
@@ -50,8 +58,8 @@ public class SalestaxrateServiceTest {
 			
 			Stateprovince stateprovince1 = new Stateprovince();
 			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateprovince1));
-			when(salestaxrateRepository.save(sales)).thenReturn(sales);
+			when(stateprovinceDAO.findById(1)).thenReturn(stateprovince1);
+			when(salestaxrateDAO.save(sales)).thenReturn(sales);
 			
 			//Method
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
@@ -61,8 +69,8 @@ public class SalestaxrateServiceTest {
 			assertEquals("cinco", sales.getName());
 			assertEquals(stateprovince1.getStateprovinceid(), salesSave.getStateprovince().getStateprovinceid());
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(salestaxrateRepository).save(sales);
+			verify(stateprovinceDAO).findById(1);
+			verify(salestaxrateDAO).save(sales);
 		}
 		
 		
@@ -79,8 +87,8 @@ public class SalestaxrateServiceTest {
 			
 			assertNull(salesSave);
 			
-			verify(stateprovinceRepository,times(0)).findById(1);
-			verify(salestaxrateRepository, times(0)).save(sales);
+			verify(stateprovinceDAO,times(0)).findById(1);
+			verify(salestaxrateDAO, times(0)).save(sales);
 		}
 		
 		@Test
@@ -96,8 +104,8 @@ public class SalestaxrateServiceTest {
 			
 			assertNull(salesSave);
 			
-			verify(stateprovinceRepository,times(0)).findById(1);
-			verify(salestaxrateRepository, times(0)).save(sales);
+			verify(stateprovinceDAO,times(0)).findById(1);
+			verify(salestaxrateDAO, times(0)).save(sales);
 		}
 
 		
@@ -113,8 +121,8 @@ public class SalestaxrateServiceTest {
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
 			
 			assertNull(salesSave);
-			verify(stateprovinceRepository,times(0)).findById(1);
-			verify(salestaxrateRepository, times(0)).save(sales);
+			verify(stateprovinceDAO,times(0)).findById(1);
+			verify(salestaxrateDAO, times(0)).save(sales);
 	    }
 	    
 	    @Test
@@ -129,8 +137,8 @@ public class SalestaxrateServiceTest {
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
 			
 			assertNull(salesSave);
-			verify(stateprovinceRepository,times(0)).findById(1);
-			verify(salestaxrateRepository, times(0)).save(sales);
+			verify(stateprovinceDAO,times(0)).findById(1);
+			verify(salestaxrateDAO, times(0)).save(sales);
 	    }
 	    
 	    @Test
@@ -145,8 +153,8 @@ public class SalestaxrateServiceTest {
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
 			
 			assertNull(salesSave);
-			verify(stateprovinceRepository,times(0)).findById(1);
-			verify(salestaxrateRepository, times(0)).save(sales);
+			verify(stateprovinceDAO,times(0)).findById(1);
+			verify(salestaxrateDAO, times(0)).save(sales);
 	    }
 	    
 	    @Test
@@ -161,7 +169,7 @@ public class SalestaxrateServiceTest {
 			
 			assertNull(salesSave);
 			
-			verify(salestaxrateRepository, times(0)).save(sales);
+			verify(salestaxrateDAO, times(0)).save(sales);
 			
 	    }
 		
@@ -182,20 +190,15 @@ public class SalestaxrateServiceTest {
 			Salestaxrate salesAux = new Salestaxrate();
 			Stateprovince stateprovince1 = new Stateprovince();
 			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(salesAux));
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateprovince1));
-			when(salestaxrateRepository.save(sales)).thenReturn(sales);
-			
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
-			assertNotNull(salesSave);
-			assertEquals(new BigDecimal("124567890.0987654321"), salesSave.getTaxrate());
-			assertEquals("cinco", salesSave.getName());
+			assertNotNull(sales);
+			assertEquals(new BigDecimal("124567890.0987654321"), sales.getTaxrate());
+			assertEquals("cinco", sales.getName());
 			
-			verify(salestaxrateRepository).findById(1);
-			verify(stateprovinceRepository).findById(1);
-			verify(salestaxrateRepository).save(sales);
-		}
+			verify(salestaxrateDAO).findById(1);
+			verify(stateprovinceDAO).findById(1);
+			}
 		
 		@Test
 		public void updateTestWrongTaxRate() {
@@ -204,17 +207,12 @@ public class SalestaxrateServiceTest {
 			sales.setTaxrate(new BigDecimal("124567890.0987654321").negate());
 			sales.setName("cinco");
 			
-			Salestaxrate saleAux = new Salestaxrate();
-			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
-			
-			
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
 			assertNull(salesSave);
 			
-			verify(salestaxrateRepository).findById(1);
-			verify(salestaxrateRepository,times(0)).save(sales);
+			assertNotNull(salestaxrateDAO);
+			verify(salestaxrateDAO,times(0)).save(sales);
 			
 		}
 		
@@ -224,18 +222,13 @@ public class SalestaxrateServiceTest {
 			sales.setSalestaxrateid(1);
 			sales.setTaxrate(null);
 			sales.setName("cinco");
-			
-			Salestaxrate saleAux = new Salestaxrate();
-			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
-			
-			
+
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
 			assertNull(salesSave);
 			
-			verify(salestaxrateRepository).findById(1);
-			verify(salestaxrateRepository,times(0)).save(sales);
+			assertNotNull(salestaxrateDAO);
+			verify(salestaxrateDAO,times(0)).save(sales);
 		}
 		
 		@Test
@@ -244,19 +237,14 @@ public class SalestaxrateServiceTest {
 			sales.setSalestaxrateid(1);
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("tres");
-			
-			Salestaxrate saleAux = new Salestaxrate();
-			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
-			
-			
+		
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
 
 			assertNull(salesSave);
 			
-			verify(salestaxrateRepository).findById(1);
-			verify(salestaxrateRepository,times(0)).save(sales);
+			assertNotNull(salestaxrateDAO);			
+			verify(salestaxrateDAO,times(0)).save(sales);
 			
 		}
 		
@@ -266,19 +254,13 @@ public class SalestaxrateServiceTest {
 			sales.setSalestaxrateid(1);
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName(null);
-			
-			Salestaxrate saleAux = new Salestaxrate();
-			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
-			
-			
+
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
-
 			assertNull(salesSave);
 			
-			verify(salestaxrateRepository).findById(1);
-			verify(salestaxrateRepository,times(0)).save(sales);
+			assertNotNull(salestaxrateDAO);
+			verify(salestaxrateDAO,times(0)).save(sales);
 		}
 		
 		@Test
@@ -288,18 +270,13 @@ public class SalestaxrateServiceTest {
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("");
 			
-			Salestaxrate saleAux = new Salestaxrate();
-			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
-			
-			
 			Salestaxrate salesSave = salestaxrateService.update(sales, 1);
 			
 
 			assertNull(salesSave);
 			
-			verify(salestaxrateRepository).findById(1);
-			verify(salestaxrateRepository,times(0)).save(sales);
+			assertNotNull(salestaxrateDAO);
+			verify(salestaxrateDAO,times(0)).save(sales);
 		}
 		
 		
@@ -312,14 +289,14 @@ public class SalestaxrateServiceTest {
 			
 			Salestaxrate saleAux = new Salestaxrate();
 			
-			when(salestaxrateRepository.findById(1)).thenReturn(Optional.of(saleAux));
+			when(salestaxrateDAO.findById(1)).thenReturn(saleAux);
 			
 			
 			Salestaxrate salesUpdate = salestaxrateService.update(sales, 1);
 			
 			assertNull(salesUpdate);
-			verify(salestaxrateRepository).findById(1);
-			verify(salestaxrateRepository,times(0)).save(sales);
+			verify(salestaxrateDAO).findById(1);
+			verify(salestaxrateDAO,times(0)).save(sales);
 		}
 		
 	}
