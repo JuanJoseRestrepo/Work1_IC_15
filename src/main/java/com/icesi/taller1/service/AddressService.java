@@ -1,6 +1,8 @@
 package com.icesi.taller1.service;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class AddressService{
 	
 	//Methods
 	//Main Methods---
+	@Transactional
 	public Address save(Address entity, Integer stateprovinceid) {
 		Address sAddress = null;
 		
@@ -55,7 +58,7 @@ public class AddressService{
 		
 		return sAddress;
 	}
-	
+	@Transactional
 	public Address update(Address entity, Integer stateprovinceid) {
 
 		boolean addressline1V = (entity.getAddressline1() != null) && (!entity.getAddressline1().isBlank());
@@ -84,15 +87,15 @@ public class AddressService{
 		
 		return entity;
 	} 
-	
+	@Transactional
 	public Optional<Address> findById(Integer id) {
 		return Optional.ofNullable(this.addressDao.findById(id));
 	}
-	
+	@Transactional
 	public Iterable<Address> findAll() {
 		return addressDao.findAll();
 	}
-	
+	@Transactional
 	public Address getAddress(Integer id) {
 		return addressDao.findById(id);
 	}

@@ -16,24 +16,35 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.icesi.taller1.boot.Taller1Application;
+import com.icesi.taller1.dao.CountryregionDAO;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.repository.CountryregionRepository;
 import com.icesi.taller1.service.CountryregionService;
 
 @ContextConfiguration(classes = Taller1Application.class)
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class CountryregionTest {
 
 	@Mock
-	private CountryregionRepository countryregionRepository;
+	private CountryregionDAO countryregionDAO;
 	
 	@InjectMocks
 	private CountryregionService countryregionService;
 	
+	
+	@Autowired
+	public CountryregionTest(CountryregionDAO countryregionDAO, CountryregionService countryregionService) {
+		super();
+		this.countryregionDAO = countryregionDAO;
+		this.countryregionService = countryregionService;
+	}
+
 	@Nested
 	@Tag("create")
 	class Create {
@@ -45,7 +56,6 @@ public class CountryregionTest {
 			cr.setCountryregioncode("1234");
 			cr.setName("Colombia");
 			
-			when(countryregionRepository.save(cr)).thenReturn(cr);
 			
 			Countryregion save = countryregionService.save(cr);
 			
@@ -53,7 +63,6 @@ public class CountryregionTest {
 			assertEquals("1234", save.getCountryregioncode());
 			assertEquals("Colombia", save.getName());
 			
-			verify(countryregionRepository).save(cr);
 		}
 		
 		@Test
@@ -70,7 +79,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 			
 		}
 		
@@ -88,7 +97,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -105,7 +114,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -121,7 +130,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 			
 		}
 		
@@ -138,7 +147,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -154,7 +163,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -169,7 +178,7 @@ public class CountryregionTest {
 			//Asserts
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 	}
@@ -186,19 +195,13 @@ public class CountryregionTest {
 			cr.setCountryregioncode("1234");
 			cr.setName("Colombia");
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
-			when(countryregionRepository.save(cr)).thenReturn(cr);
-			
 			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNotNull(save);
 			assertEquals("1234", save.getCountryregioncode());
 			assertEquals("Colombia", save.getName());
-		
-			verify(countryregionRepository).save(cr);
+
 		}
 		
 		
@@ -210,15 +213,12 @@ public class CountryregionTest {
 			cr.setCountryregioncode("");
 			cr.setName("Colombia");
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
 			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -229,15 +229,12 @@ public class CountryregionTest {
 			cr.setCountryregioncode("012345");
 			cr.setName("Colombia");
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
 			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -248,15 +245,11 @@ public class CountryregionTest {
 			cr.setCountryregioncode(null);
 			cr.setName("Colombia");
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
-			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -267,15 +260,12 @@ public class CountryregionTest {
 			cr.setCountryregioncode("1234");
 			cr.setName("Cali");
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
 			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 			
 		}
 		
@@ -287,15 +277,11 @@ public class CountryregionTest {
 			cr.setCountryregioncode("1234");
 			cr.setName(null);
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
-			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -306,15 +292,12 @@ public class CountryregionTest {
 			cr.setCountryregioncode("1234");
 			cr.setName("");
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
 			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		@Test
@@ -325,15 +308,12 @@ public class CountryregionTest {
 			cr.setCountryregioncode(null);
 			cr.setName(null);
 			
-			Countryregion crAux = new Countryregion();
-			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(crAux));
 			
 			Countryregion save = countryregionService.update(cr);
 			
 			assertNull(save);
 			
-			verify(countryregionRepository, times(0)).save(cr);
+			verify(countryregionDAO, times(0)).save(cr);
 		}
 		
 		

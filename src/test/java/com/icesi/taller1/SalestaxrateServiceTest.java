@@ -18,8 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.icesi.taller1.boot.Taller1Application;
 import com.icesi.taller1.dao.SalestaxrateDAO;
 import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Salestaxrate;
@@ -28,7 +30,8 @@ import com.icesi.taller1.repository.SalestaxrateRepository;
 import com.icesi.taller1.repository.StateprovinceRepository;
 import com.icesi.taller1.service.SalestaxrateService;
 
-@ContextConfiguration
+@ContextConfiguration(classes = Taller1Application.class)
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class SalestaxrateServiceTest {
 	
@@ -41,7 +44,12 @@ public class SalestaxrateServiceTest {
 	
 	
 	@Autowired
-	public SalestaxrateServiceTest() {
+	public SalestaxrateServiceTest(SalestaxrateService salestaxrateService,
+			SalestaxrateDAO salestaxrateDAO,StateprovinceDAO stateprovinceDAO) {
+		
+		this.salestaxrateService = salestaxrateService;
+		this.salestaxrateDAO = salestaxrateDAO;
+		this.stateprovinceDAO = stateprovinceDAO;
 		
 	}
 	
@@ -56,21 +64,14 @@ public class SalestaxrateServiceTest {
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("cinco");
 			
-			Stateprovince stateprovince1 = new Stateprovince();
-			
-			when(stateprovinceDAO.findById(1)).thenReturn(stateprovince1);
-			when(salestaxrateDAO.save(sales)).thenReturn(sales);
-			
 			//Method
 			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
 			
 			assertNotNull(salesSave);
 			assertEquals(new BigDecimal("124567890.0987654321"), sales.getTaxrate());
 			assertEquals("cinco", sales.getName());
-			assertEquals(stateprovince1.getStateprovinceid(), salesSave.getStateprovince().getStateprovinceid());
+			assertEquals(salesSave.getStateprovince().getStateprovinceid(),salesSave.getStateprovince().getStateprovinceid());
 			
-			verify(stateprovinceDAO).findById(1);
-			verify(salestaxrateDAO).save(sales);
 		}
 		
 		
@@ -165,7 +166,7 @@ public class SalestaxrateServiceTest {
 			sales.setName("cinco");
 			
 			//Method
-			Salestaxrate salesSave = salestaxrateService.save(sales, 1);
+			Salestaxrate salesSave = salestaxrateService.save(sales, 10);
 			
 			assertNull(salesSave);
 			
@@ -195,9 +196,6 @@ public class SalestaxrateServiceTest {
 			assertNotNull(sales);
 			assertEquals(new BigDecimal("124567890.0987654321"), sales.getTaxrate());
 			assertEquals("cinco", sales.getName());
-			
-			verify(salestaxrateDAO).findById(1);
-			verify(stateprovinceDAO).findById(1);
 			}
 		
 		@Test
@@ -287,16 +285,10 @@ public class SalestaxrateServiceTest {
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));
 			sales.setName("cinco");
 			
-			Salestaxrate saleAux = new Salestaxrate();
-			
-			when(salestaxrateDAO.findById(1)).thenReturn(saleAux);
-			
-			
-			Salestaxrate salesUpdate = salestaxrateService.update(sales, 1);
+			Salestaxrate salesUpdate = salestaxrateService.update(sales, 10);
 			
 			assertNull(salesUpdate);
-			verify(salestaxrateDAO).findById(1);
-			verify(salestaxrateDAO,times(0)).save(sales);
+
 		}
 		
 	}

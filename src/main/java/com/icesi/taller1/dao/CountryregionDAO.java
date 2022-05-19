@@ -26,14 +26,16 @@ public class CountryregionDAO implements CountryregionDAOInterface {
 	
 	@Override
 	@Transactional
-	public void save(Countryregion entity) {
+	public Countryregion save(Countryregion entity) {
 		entityManager.persist(entity);
+		return entity;
 	}
 
 	@Override
 	@Transactional
-	public void update(Countryregion entity) {
+	public Countryregion update(Countryregion entity) {
 		entityManager.merge(entity);
+		return entity;
 	}
 
 	@Override

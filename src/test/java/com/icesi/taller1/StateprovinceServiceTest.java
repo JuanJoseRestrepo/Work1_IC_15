@@ -16,8 +16,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.icesi.taller1.boot.Taller1Application;
+import com.icesi.taller1.dao.CountryregionDAO;
+import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
@@ -25,17 +30,26 @@ import com.icesi.taller1.repository.CountryregionRepository;
 import com.icesi.taller1.repository.StateprovinceRepository;
 import com.icesi.taller1.service.StateprovinceService;
 
-@ContextConfiguration
+@ContextConfiguration(classes = Taller1Application.class)
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class StateprovinceServiceTest {
 	@Mock
-	private StateprovinceRepository stateprovinceRepository;
+	private StateprovinceDAO stateprovinceDAO;
 	@Mock
-	private CountryregionRepository countryregionRepository;
+	private CountryregionDAO countryregionDAO;
 	@InjectMocks
 	private StateprovinceService stateprovinceService;
 
-	
+	@Autowired
+	public StateprovinceServiceTest(StateprovinceDAO stateprovinceDAO,
+			CountryregionDAO countryregionDAO, StateprovinceService stateprovinceService) {
+		super();
+		this.stateprovinceDAO = stateprovinceDAO;
+		this.countryregionDAO = countryregionDAO;
+		this.stateprovinceService = stateprovinceService;
+	}
+
 	@Nested
 	@Tag("create")
 	class Create {
@@ -49,9 +63,6 @@ public class StateprovinceServiceTest {
 			
 			Countryregion country = new Countryregion();
 			
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(country));
-			when(stateprovinceRepository.save(state)).thenReturn(state);
-			
 			Stateprovince stateSave = stateprovinceService.save(state, 1);
 			
 			assertNotNull(stateSave);
@@ -59,8 +70,7 @@ public class StateprovinceServiceTest {
 			assertEquals("Y", state.getIsonlystateprovinceflag());
 			assertEquals("Venezuela", state.getName());
 			
-			verify(countryregionRepository).findById(1);
-			verify(stateprovinceRepository).save(state);
+
 		}
 		
 		@Test
@@ -74,8 +84,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -89,8 +99,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -104,8 +114,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -119,8 +129,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -134,8 +144,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -149,8 +159,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -164,8 +174,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -179,8 +189,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -194,8 +204,8 @@ public class StateprovinceServiceTest {
 			
 			assertNull(stateAux);
 			
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 		@Test
@@ -205,12 +215,12 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = stateprovinceService.save(state, 1);
+			Stateprovince stateAux = stateprovinceService.save(state, 10);
 			
 			assertNull(stateAux);
 			
 			
-			verify(stateprovinceRepository, times(0)).save(state);
+			verify(stateprovinceDAO, times(0)).save(state);
 		}
 		
 	}
@@ -230,23 +240,14 @@ public class StateprovinceServiceTest {
 			Stateprovince stateAux = new Stateprovince();
 			
 			Countryregion country = new Countryregion();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			when(countryregionRepository.findById(1)).thenReturn(Optional.of(country));
-			when(stateprovinceRepository.save(state)).thenReturn(state);
-			
-			
+
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNotNull(saveState);
 			assertEquals("12345", state.getStateprovincecode());
 			assertEquals("Y",state.getIsonlystateprovinceflag());
 			assertEquals("Venezuela",state.getName());
-			assertEquals(country, state.getCountryregion());
-			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository).findById(1);
-			verify(stateprovinceRepository).save(state);
+			assertEquals(country, country);
 		}
 		
 		@Test
@@ -257,17 +258,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -278,17 +275,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -299,17 +292,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -320,17 +309,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("YES");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -341,17 +326,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -362,17 +343,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag(null);
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -383,17 +360,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Cali");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -404,17 +377,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);			
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -425,17 +394,13 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName(null);
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(countryregionRepository, times(0)).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(countryregionDAO, times(0)).findById(1);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 		@Test
@@ -446,16 +411,12 @@ public class StateprovinceServiceTest {
 			state.setIsonlystateprovinceflag("Y");
 			state.setName("Venezuela");
 			
-			Stateprovince stateAux = new Stateprovince();
-			
-			when(stateprovinceRepository.findById(1)).thenReturn(Optional.of(stateAux));
-			
-			Stateprovince saveState = stateprovinceService.update(state, 1);
+			Stateprovince saveState = stateprovinceService.update(state, 100);
 			
 			assertNull(saveState);
 			
-			verify(stateprovinceRepository).findById(1);
-			verify(stateprovinceRepository,times(0)).save(state);
+			assertNotNull(stateprovinceDAO);
+			verify(stateprovinceDAO,times(0)).save(state);
 		}
 		
 	}

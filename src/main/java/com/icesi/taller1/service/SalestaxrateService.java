@@ -2,6 +2,8 @@ package com.icesi.taller1.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class SalestaxrateService {
 		this.stateprovinceRepository = stateprovinceRepository;
 	}
 	
-
+	@Transactional
 	public Salestaxrate save(Salestaxrate entity, Integer stateprovinceid) {
 		
 		Salestaxrate aux1 = null;
@@ -55,6 +57,7 @@ public class SalestaxrateService {
 		return aux1;
 	}
 	
+	@Transactional
 	public Salestaxrate update(Salestaxrate entity, Integer stateprovinceid) {
 		
 		boolean one = (entity.getTaxrate() != null) && (entity.getTaxrate().doubleValue() >= 0);
@@ -80,15 +83,15 @@ public class SalestaxrateService {
 		return entity;
 		
 	}
-	
+	@Transactional
 	public Optional<Salestaxrate> findById(Integer id) {
 		return Optional.ofNullable(salestaxrateDAO.findById(id));
 	}
-	
+	@Transactional
 	public Iterable<Salestaxrate> findAll() {
 		return salestaxrateDAO.findAll();
 	}
-	
+	@Transactional
 	public Salestaxrate getSalestaxrate(Integer id) {
 		return salestaxrateDAO.findById(id);
 	}

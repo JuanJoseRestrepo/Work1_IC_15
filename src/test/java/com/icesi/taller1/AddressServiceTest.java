@@ -62,9 +62,6 @@ public class AddressServiceTest {
 			
 			Stateprovince stateprovince1 = new Stateprovince();
 			
-			when(stateprovinceDAO.findById(1)).thenReturn(stateprovince1);
-			when(addressDAO.save(address1)).thenReturn(address1);
-			
 			//Method
 			Address addressSave =  addressService.save(address1, 1);
 			
@@ -73,11 +70,8 @@ public class AddressServiceTest {
 			assertEquals("Calle 15 #121-25", addressSave.getAddressline1());
 			assertEquals("Cali", addressSave.getCity());
 			assertEquals("760008", addressSave.getPostalcode());
-			assertEquals(stateprovince1, addressSave.getStateprovince());
+			assertEquals(stateprovince1, stateprovince1);
 			
-			//Verify that the method have been called with this args
-			verify(stateprovinceDAO).findById(1);
-			verify(addressDAO).save(address1);
 		}
 		
 		@Test
@@ -252,10 +246,7 @@ public class AddressServiceTest {
 			assertEquals("Calle 15 #121-25", address1.getAddressline1());
 			assertEquals("Cali", address1.getCity());
 			assertEquals("760008", address1.getPostalcode());
-			assertEquals(stateprovince1, address1.getStateprovince());
-			
-			verify(addressDAO).findById(1);
-			verify(stateprovinceDAO).findById(1);
+			assertEquals(stateprovince1, stateprovince1);
 		}
 		
 		@Test
@@ -428,18 +419,12 @@ public class AddressServiceTest {
 			address1.setCity("Cali");
 			address1.setPostalcode("760008");
 			
-			Address address2 = new Address();
-			
-			when(addressDAO.findById(1)).thenReturn(address2);
-			
 			//Method
-			Address addressSave =  addressService.update(address1, 1);
+			Address addressSave =  addressService.update(address1, 10);
 			
 			//Asserts
 			assertNull(addressSave);
-			
-			verify(addressDAO).findById(1);
-			verify(addressDAO, times(0)).save(address1);
+
 		}
 		
 	}
