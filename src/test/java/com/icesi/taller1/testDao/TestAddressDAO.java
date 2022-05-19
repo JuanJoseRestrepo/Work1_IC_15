@@ -25,6 +25,8 @@ import com.icesi.taller1.dao.AddressDAO;
 import com.icesi.taller1.dao.StateprovinceDAO;
 import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Stateprovince;
+import com.icesi.taller1.model.sales.Salesorderheader;
+import com.icesi.taller1.repository.SalesorderheaderRepository;
 
 
 
@@ -39,7 +41,14 @@ public class TestAddressDAO {
 	@Autowired
 	private StateprovinceDAO stateprovinceDAO;
 	
+	private SalesorderheaderRepository salesorderheaderRepository;
+	
 	private Address address;
+	
+	@Autowired
+	public TestAddressDAO(SalesorderheaderRepository salesorderheaderRepository) {
+		this.salesorderheaderRepository = salesorderheaderRepository;
+	}
 	
 	void initDao() {
 		address = new Address();
@@ -166,6 +175,28 @@ public class TestAddressDAO {
 			assertEquals(addressDAO.findById(address.getAddressid()), address);
 		}
 		
+		@Test
+		@Order(8)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+		void getListAddressByAlmostTwoHeadsBySales() {
+			initDao();
+			assertNotNull(addressDAO);
+			Salesorderheader salesorder1 = new Salesorderheader();
+			Salesorderheader salesorder2 = new Salesorderheader();
+			
+			salesorder1.setShiptoaddress(address);
+			salesorder2.setShiptoaddress(address);
+			
+			salesorderheaderRepository.save(salesorder1);
+			salesorderheaderRepository.save(salesorder2);
+			
+			addressDAO.save(address);
+			
+			List<Address> address = addressDAO.getListAddressByAlmostTwoHeadsBySales();
+			
+			assertEquals(1, address.size());
+			
+		}
 		
 	}
 	

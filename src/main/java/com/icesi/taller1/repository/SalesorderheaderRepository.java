@@ -3,9 +3,9 @@ package com.icesi.taller1.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.icesi.taller1.model.sales.Salesterritory;
+import com.icesi.taller1.model.sales.*;
 
 @Repository
-public interface SalesTerritoryRepository extends JpaRepository<Salesterritory, Integer> {
+public interface SalesorderheaderRepository extends JpaRepository<Salesorderheader, Integer> {
 
 }

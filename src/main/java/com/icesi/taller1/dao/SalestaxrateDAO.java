@@ -80,7 +80,7 @@ public class SalestaxrateDAO implements SalestaxrateDAOInterface {
 				+ "FROM Stateprovince stateprovince, Address address "
 				+ "WHERE stateprovince.stateprovinceid = address.stateprovince.stateprovinceid"
 				+ " AND stateprovince.territoryid = " + salesterritory.getTerritoryid()   
-				+ " AND EXISTS(SELECT salestaxrate.stateprovince FROM Salestaxrate salestaxrate WHERE salestaxrate.stateprovince = stateprovince.stateprovinceid)"
+				+ " AND EXISTS(SELECT salestaxrate.stateprovince FROM Salestaxrate salestaxrate WHERE salestaxrate.stateprovince = stateprovince)"
 				+ " GROUP BY stateprovince.stateprovinceid "
 				+ "ORDER BY stateprovince.name";
 		

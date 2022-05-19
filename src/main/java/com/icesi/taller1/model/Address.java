@@ -2,6 +2,7 @@ package com.icesi.taller1.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import com.icesi.taller1.model.sales.*;
 
 /**
  * The persistent class for the address database table.
@@ -45,6 +48,9 @@ public class Address implements Serializable {
 	private Integer rowguid;
 
 	private String spatiallocation;
+	
+	@OneToMany(mappedBy = "shiptoaddress")
+	private List<Salesorderheader> salesorderheaders;
 
 	// bi-directional many-to-one association to Stateprovince
 	@NotNull(groups = BasicInfo.class)

@@ -15,6 +15,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.icesi.taller1.model.Address;
+
 /**
  * The persistent class for the salesorderheader database table.
  *
@@ -57,7 +59,9 @@ public class Salesorderheader implements Serializable {
 
 	private Integer shipmethodid;
 
-	private Integer shiptoaddressid;
+	@ManyToOne
+	@JoinColumn(name = "shiptoaddressid")
+	private Address shiptoaddress;
 
 	private Integer status;
 
@@ -206,12 +210,22 @@ public class Salesorderheader implements Serializable {
 		return this.shipmethodid;
 	}
 
-	public Integer getShiptoaddressid() {
-		return this.shiptoaddressid;
+	public Address getShiptoaddressid() {
+		return this.shiptoaddress;
 	}
 
 	public Integer getStatus() {
 		return this.status;
+	}
+	
+	
+
+	public Address getShiptoaddress() {
+		return shiptoaddress;
+	}
+
+	public void setShiptoaddress(Address shiptoaddress) {
+		this.shiptoaddress = shiptoaddress;
 	}
 
 	public BigDecimal getSubtotal() {
@@ -329,9 +343,6 @@ public class Salesorderheader implements Serializable {
 		this.shipmethodid = shipmethodid;
 	}
 
-	public void setShiptoaddressid(Integer shiptoaddressid) {
-		this.shiptoaddressid = shiptoaddressid;
-	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
