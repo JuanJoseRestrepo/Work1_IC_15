@@ -67,7 +67,7 @@ public class StateprovinceDAO implements StateprovinceDAOInterface {
 	@Override
 	@Transactional
 	public List<Stateprovince> getStateprovinceByTerritoryId(Integer id) {
-		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.territoryid =: '"+id+"'";
+		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.territoryid = '"+id+"'";
 		return entityManager.createQuery(jpql,Stateprovince.class).getResultList();
 	}
 

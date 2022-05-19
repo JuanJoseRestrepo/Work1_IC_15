@@ -46,7 +46,11 @@ public class TestAddressDAO {
 	private Address address;
 	
 	@Autowired
-	public TestAddressDAO(SalesorderheaderRepository salesorderheaderRepository) {
+	public TestAddressDAO(AddressDAO addressDAO, StateprovinceDAO stateprovinceDAO,
+			SalesorderheaderRepository salesorderheaderRepository) {
+		super();
+		this.addressDAO = addressDAO;
+		this.stateprovinceDAO = stateprovinceDAO;
 		this.salesorderheaderRepository = salesorderheaderRepository;
 	}
 	
@@ -57,7 +61,7 @@ public class TestAddressDAO {
 		address.setAddressline2("Line 2 of address");
 		address.setPostalcode("770014");
 	}
-	
+
 
 	@Nested
 	@Tag("Test")

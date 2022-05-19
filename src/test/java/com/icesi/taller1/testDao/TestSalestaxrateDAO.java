@@ -51,13 +51,19 @@ public class TestSalestaxrateDAO {
 	 private Salestaxrate salestaxrate;
 	 
 	 private Salesterritory salesterritory;
-	 
+
 	 @Autowired
-	 public TestSalestaxrateDAO(SalesTerritoryRepository salesterritoryRepository) {
-		 this.salesterritoryRepository = salesterritoryRepository;
-	 }
-	 
-	 void initDao() {
+	 public TestSalestaxrateDAO(SalestaxrateDAO salestaxrateDAO, StateprovinceDAO stateprovinceDAO,
+			AddressDAO addressDAO, SalesTerritoryRepository salesterritoryRepository) {
+		super();
+		this.salestaxrateDAO = salestaxrateDAO;
+		this.stateprovinceDAO = stateprovinceDAO;
+		this.addressDAO = addressDAO;
+		this.salesterritoryRepository = salesterritoryRepository;
+	}
+
+
+	void initDao() {
 			salestaxrate = new Salestaxrate();
 			salestaxrate.setTaxrate(new BigDecimal("124567890.0987654321"));
 			salestaxrate.setName("cinco");

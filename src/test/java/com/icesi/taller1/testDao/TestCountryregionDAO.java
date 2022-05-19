@@ -33,6 +33,12 @@ public class TestCountryregionDAO {
 	
 	private Countryregion countryregion;
 	
+	@Autowired
+	public TestCountryregionDAO(CountryregionDAO countryregionDAO) {
+		super();
+		this.countryregionDAO = countryregionDAO;
+	}
+
 	void initDao() { 
 		countryregion = new Countryregion();
 		countryregion.setCountryregioncode("1234");
