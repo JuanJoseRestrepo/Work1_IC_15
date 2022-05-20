@@ -68,7 +68,6 @@ public class TestAddressDAO {
 	class DaoTestAddress{
 		@Test
 		@Order(1)
-		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void saveTestDaoAddress() {
 				initDao();
 				assertNotNull(addressDAO);
