@@ -56,9 +56,9 @@ public class TestAddressDAO {
 	
 	void initDao() {
 		address = new Address();
-		address.setAddressline1("Line 1 of address");
+		address.setAddressline1("Cra 29a #10b - 118");
 		address.setCity("Cali");
-		address.setAddressline2("Line 2 of address");
+		address.setAddressline2("Address2");
 		address.setPostalcode("770014");
 	}
 

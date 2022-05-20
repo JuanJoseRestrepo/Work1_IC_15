@@ -15,5 +15,4 @@ public interface SalestaxrateDAOInterface {
 	public void delete(Salestaxrate entity);
 	public Salestaxrate findById(Integer codigo);
 	public List<Salestaxrate> findAll();
-	public List<Object[]> getStateprovincesWithAddressAndSales(Salesterritory salesterritory);
 }

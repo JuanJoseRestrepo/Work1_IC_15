@@ -13,6 +13,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +23,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.taller1.boot.Taller1Application;
+import com.icesi.taller1.dao.AddressDAO;
 import com.icesi.taller1.dao.CountryregionDAO;
+import com.icesi.taller1.dao.SalestaxrateDAO;
 import com.icesi.taller1.dao.StateprovinceDAO;
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.model.sales.Salesterritory;
 import com.icesi.taller1.repository.SalesTerritoryRepository;
@@ -36,26 +41,42 @@ public class TestStateprovinceDAO {
 
 	@Autowired
 	private StateprovinceDAO stateprovinceDAO;
-	
 	@Autowired
 	private CountryregionDAO countryrregionDAO;
 	@Autowired
 	private SalesTerritoryRepository salesterritoryRepository;
+	@Autowired
+	private AddressDAO addressDAO;
+	@Autowired
+	private SalestaxrateDAO salestaxrateDAO;
+	
+	private Salestaxrate salestaxrate;
 	
 	private Stateprovince stateprovince;
 	
+	private Salesterritory salesterritory;
+	
 	@Autowired
-	public TestStateprovinceDAO(StateprovinceDAO stateprovinceDAO, 
-			CountryregionDAO countryrregionDAO,SalesTerritoryRepository salesterritoryRepository) {
-		super();
+	public TestStateprovinceDAO(SalesTerritoryRepository salesterritoryRepository,
+			StateprovinceDAO stateprovinceDAO,CountryregionDAO countryrregionDAO,
+			SalestaxrateDAO salestaxrateDAO) {
+		this.salesterritoryRepository = salesterritoryRepository;
 		this.stateprovinceDAO = stateprovinceDAO;
 		this.countryrregionDAO = countryrregionDAO;
-		this.salesterritoryRepository = salesterritoryRepository;
+		this.salestaxrateDAO = salestaxrateDAO;
 	}
+
 	void initDao() { 
+		
+		salestaxrate = new Salestaxrate();
+		salestaxrate.setTaxrate(new BigDecimal("124567890.0987654321"));
+		salestaxrate.setName("cinco");
+		
 		stateprovince = new Stateprovince();
-		stateprovince.setName("Valle del Cauca");
-		stateprovince.setStateprovincecode("12345");
+		stateprovince.setName("Rioacha");
+		stateprovince.setStateprovincecode("12456");
+		
+		salesterritory = new Salesterritory();
 	}
 	
 	@Test
@@ -85,8 +106,8 @@ public class TestStateprovinceDAO {
 		initDao();
 		assertNotNull(stateprovinceDAO);
 		stateprovinceDAO.save(stateprovince);
-		stateprovince.setName("Antioquia");
-		stateprovince.setStateprovincecode("98765");
+		stateprovince.setName("New york");
+		stateprovince.setStateprovincecode("11122");
 
 		stateprovinceDAO.update(stateprovince);
 
@@ -94,8 +115,8 @@ public class TestStateprovinceDAO {
 
 
 		assertAll(
-				() -> assertEquals(edited.getName(),"Antioquia"),
-				() -> assertEquals(edited.getStateprovincecode(),"98765")
+				() -> assertEquals(edited.getName(),"New york"),
+				() -> assertEquals(edited.getStateprovincecode(),"11122")
 				);
 
 	}
@@ -134,7 +155,7 @@ public class TestStateprovinceDAO {
 		stateprovinceDAO.save(stateprovince);
 
 		List<Stateprovince> results = stateprovinceDAO.getStateprovinceByName("Valle del Cauca");
-		assertEquals(stateprovinceDAO.findAll().size(), 2);
+		assertEquals(results.size(), 2);
 	}
 
 	@Test
@@ -185,6 +206,36 @@ public class TestStateprovinceDAO {
 		List<Stateprovince> results = stateprovinceDAO.getStateprovinceByTerritoryId(st.getTerritoryid());
 		assertEquals(results.size(), 2);
 	}
+	
+	 @Test
+	 @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	 void getStateprovinceWithAddressAndSalesTaxrateDAO() {
+		 initDao();
+		 assertNotNull(addressDAO);
+		 assertNotNull(stateprovinceDAO);
+		 Stateprovince state = new Stateprovince();
+		 
+		 salesterritoryRepository.save(salesterritory);
+		 
+		 Address ad = new Address();
+		 ad.setStateprovince(state);
+		 
+		 state.setTerritoryid(salesterritory.getTerritoryid());
+		 
+		 Stateprovince st = stateprovinceDAO.save(state);
+		 ad.setStateprovince(st);
+		 
+		 addressDAO.save(ad);
+		 
+		 salestaxrate.setStateprovince(st);
+		 
+		 salestaxrateDAO.save(salestaxrate);
+		 
+		 
+		 List<Object[]> listStates = stateprovinceDAO.getStateprovincesWithAddressAndSales(salesterritory);
+		
+		 assertEquals(1,listStates.size());
+	 }
 	
 	
 	

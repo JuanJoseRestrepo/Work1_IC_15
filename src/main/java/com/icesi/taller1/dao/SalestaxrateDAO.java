@@ -73,17 +73,4 @@ public class SalestaxrateDAO implements SalestaxrateDAOInterface {
 		return entityManager.createQuery(jpql,Salestaxrate.class).getResultList();
 	}
 
-	@Override
-	@Transactional
-	public List<Object[]> getStateprovincesWithAddressAndSales(Salesterritory salesterritory) {
-		String jpql = "SELECT stateprovince, COUNT(address.addressid) "
-				+ "FROM Stateprovince stateprovince, Address address "
-				+ "WHERE stateprovince.stateprovinceid = address.stateprovince.stateprovinceid"
-				+ " AND stateprovince.territoryid = " + salesterritory.getTerritoryid()   
-				+ " AND EXISTS(SELECT salestaxrate.stateprovince FROM Salestaxrate salestaxrate WHERE salestaxrate.stateprovince = stateprovince)"
-				+ " GROUP BY stateprovince.stateprovinceid "
-				+ "ORDER BY stateprovince.name";
-		
-		return entityManager.createQuery(jpql,Object[].class).getResultList();
-	}
 }

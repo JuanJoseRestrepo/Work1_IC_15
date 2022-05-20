@@ -3,6 +3,7 @@ package com.icesi.taller1.dao;
 import java.util.List;
 
 import com.icesi.taller1.model.Stateprovince;
+import com.icesi.taller1.model.sales.Salesterritory;
 
 public interface StateprovinceDAOInterface {
 
@@ -14,4 +15,5 @@ public interface StateprovinceDAOInterface {
 	public void delete(Stateprovince entity);
 	public Stateprovince findById(Integer codigo);
 	public List<Stateprovince> findAll();
+	List<Object[]> getStateprovincesWithAddressAndSales(Salesterritory salesterritory);
 }

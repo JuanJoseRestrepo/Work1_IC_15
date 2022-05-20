@@ -43,23 +43,15 @@ public class TestSalestaxrateDAO {
 	 @Autowired
 	 private StateprovinceDAO stateprovinceDAO;
 	 
-	 @Autowired
-	 private AddressDAO addressDAO;
-	 
-	 private SalesTerritoryRepository salesterritoryRepository;
-	 
 	 private Salestaxrate salestaxrate;
 	 
-	 private Salesterritory salesterritory;
+	 //private Salesterritory salesterritory;
 
 	 @Autowired
-	 public TestSalestaxrateDAO(SalestaxrateDAO salestaxrateDAO, StateprovinceDAO stateprovinceDAO,
-			AddressDAO addressDAO, SalesTerritoryRepository salesterritoryRepository) {
+	 public TestSalestaxrateDAO(SalestaxrateDAO salestaxrateDAO, StateprovinceDAO stateprovinceDAO) {
 		super();
 		this.salestaxrateDAO = salestaxrateDAO;
 		this.stateprovinceDAO = stateprovinceDAO;
-		this.addressDAO = addressDAO;
-		this.salesterritoryRepository = salesterritoryRepository;
 	}
 
 
@@ -67,8 +59,6 @@ public class TestSalestaxrateDAO {
 			salestaxrate = new Salestaxrate();
 			salestaxrate.setTaxrate(new BigDecimal("124567890.0987654321"));
 			salestaxrate.setName("cinco");
-			
-			salesterritory = new Salesterritory();
 			
 	 }
 	 
@@ -170,37 +160,6 @@ public class TestSalestaxrateDAO {
 			 
 		 }
 		 
-		 @Test
-		 @Order(7)
-		 @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-		 void getStateprovinceWithAddressAndSalesTaxrateDAO() {
-			 initDao();
-			 assertNotNull(salestaxrateDAO);
-			 assertNotNull(stateprovinceDAO);
-			 Stateprovince state = new Stateprovince();
-			 
-			 salesterritoryRepository.save(salesterritory);
-			 
-			 Address ad = new Address();
-			 ad.setStateprovince(state);
-			 
-			 state.setTerritoryid(salesterritory.getTerritoryid());
-			 
-			 Stateprovince st = stateprovinceDAO.save(state);
-			 ad.setStateprovince(st);
-			 
-			 addressDAO.save(ad);
-			 
-			 salestaxrate.setStateprovince(st);
-			 
-			 salestaxrateDAO.save(salestaxrate);
-			 
-			 
-			 List<Object[]> listStates = salestaxrateDAO.getStateprovincesWithAddressAndSales(salesterritory);
-			 
-			 System.out.println("AQUIIIIIIIIII" + " " + listStates.size() + "  " + salesterritory.getTerritoryid());
-			 assertEquals(1,listStates.size());
-		 }
 		 
 	 }
 

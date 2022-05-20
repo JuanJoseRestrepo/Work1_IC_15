@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import com.icesi.taller1.model.Stateprovince;
+import com.icesi.taller1.model.sales.Salesterritory;
 
 @Repository
 @Scope("singleton")
@@ -77,4 +78,19 @@ public class StateprovinceDAO implements StateprovinceDAOInterface {
 		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.name = '"+name+"'";
 		return entityManager.createQuery(jpql,Stateprovince.class).getResultList();
 	}
+	
+	@Override
+	@Transactional
+	public List<Object[]> getStateprovincesWithAddressAndSales(Salesterritory salesterritory) {
+		String jpql = "SELECT stateprovince, COUNT(address.addressid) "
+				+ "FROM Stateprovince stateprovince, Address address "
+				+ "WHERE stateprovince.stateprovinceid = address.stateprovince.stateprovinceid"
+				+ " AND stateprovince.territoryid = " + salesterritory.getTerritoryid()   
+				+ " AND EXISTS(SELECT salestaxrate.stateprovince FROM Salestaxrate salestaxrate WHERE salestaxrate.stateprovince = stateprovince)"
+				+ " GROUP BY stateprovince.stateprovinceid "
+				+ "ORDER BY stateprovince.name";
+		
+		return entityManager.createQuery(jpql,Object[].class).getResultList();
+	}
+	
 }
