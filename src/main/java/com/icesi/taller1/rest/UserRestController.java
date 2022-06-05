@@ -1,5 +1,6 @@
 package com.icesi.taller1.rest;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.BasicInfo;
+import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.service.AddressService;
 import com.icesi.taller1.service.CountryregionService;
@@ -23,16 +25,14 @@ import com.icesi.taller1.service.StateprovinceService;
 @RestController
 public class UserRestController {
 
-	
-	private StateprovinceService stateprovinceService;
 	private CountryregionService countryregionService;
+	private StateprovinceService stateprovinceService;
 	private AddressService addressService;
 	
 	@Autowired
-	public UserRestController(StateprovinceService stateprovinceService, CountryregionService countryregionService,
-			AddressService addressService) {
-		this.stateprovinceService = stateprovinceService;
+	public UserRestController(CountryregionService countryregionService,StateprovinceService stateprovinceService,AddressService addressService) {
 		this.countryregionService = countryregionService;
+		this.stateprovinceService = stateprovinceService;
 		this.addressService = addressService;
 	}
 	
@@ -54,7 +54,7 @@ public class UserRestController {
 	
 	@RequestMapping(value="/provinces", method =RequestMethod.POST)
 	public ResponseEntity<Stateprovince> createStateProvince(@Validated(BasicInfo.class) @RequestBody Stateprovince sp){
-		stateprovinceService.save(sp, null);
+		stateprovinceService.saveStateprovinces(sp);
 		return new ResponseEntity<Stateprovince>(sp, HttpStatus.CREATED);
 	}
 	
@@ -81,15 +81,25 @@ public class UserRestController {
 	
 	@RequestMapping(value = "/addresses", method = RequestMethod.POST)
 	public ResponseEntity<Address> createEntityAddress(@Validated(BasicInfo.class) @RequestBody Address a) {
-		addressService.save(a, null);
+		addressService.saveAddress(a);
 		return new ResponseEntity<Address>(a, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/baddresses/{id}")
+	@PutMapping("/addresses/{id}")
 	public ResponseEntity<Address> updateEntityAddress(@PathVariable(value = "id") Integer id,
 			@Validated(BasicInfo.class) @RequestBody Address a) {
 
 		addressService.update(a, id);
 		return ResponseEntity.ok(a);
+	}
+	
+	
+	//COUNTRYREGION
+	//-----------------------------------------------------------------------------------------------
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/countriess", method = RequestMethod.GET)
+	public ResponseEntity<Countryregion> getAllCountryregion() {
+		List<Countryregion> countries = (List<Countryregion>) countryregionService.findAll();
+		return new ResponseEntity(countries, HttpStatus.OK);
 	}
 }

@@ -22,27 +22,23 @@ import com.icesi.taller1.service.StateprovinceService;
 @Controller
 public class UserController {
 	
-	private StateprovinceService stateprovinceService;
-	private CountryregionService countryregionService;
-	private AddressService addressService;
+	private DelegatedUser du;
 	
 	@Autowired
-	public UserController(StateprovinceService stateprovinceService, AddressService addressService,CountryregionService countryregionService) {
-		this.stateprovinceService = stateprovinceService;
-		this.addressService = addressService;
-		this.countryregionService = countryregionService;
+	public UserController(DelegatedUser du) {
+		this.du = du;
 	}
 	
 	@GetMapping("/user/province/")
     public String indexProvinces(Model model) {
-		model.addAttribute("stateprovince", stateprovinceService.findAll());
+		model.addAttribute("stateprovince", du.getAllStateprovinces());
         return "user/indexProvince";
     }
 	
 	@GetMapping("/user/province/add")
 	public String addProvince(Model model) {
 		model.addAttribute("stateprovince",new Stateprovince());
-		model.addAttribute("countries", countryregionService.findAll());
+		model.addAttribute("countries", du.getAllCountryregion());
 		return "user/addProvince";
 	}
 	
@@ -50,17 +46,17 @@ public class UserController {
 	public String saveProvince(@Validated(BasicInfo.class) @ModelAttribute Stateprovince stateprovince,BindingResult bindingResult,Model model,@RequestParam(value ="action",required = true) String action) {
 		
 		if(action.equalsIgnoreCase("Cancelar") || action.equalsIgnoreCase("Cancel")) {
-			model.addAttribute("stateprovince", stateprovinceService.findAll());
+			model.addAttribute("stateprovince", du.getAllStateprovinces());
 			return "redirect:/user/province/";
 		}
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("countries", countryregionService.findAll());
+			model.addAttribute("countries", du.getAllCountryregion());
 	        return "user/addProvince";
 		}
 		
 		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
-			stateprovinceService.save(stateprovince, stateprovince.getCountryregion().getCountryregionid());
+			du.createStateprovince(stateprovince);
 		}
 		return "redirect:/user/province/";
 	}
@@ -68,12 +64,12 @@ public class UserController {
 	
 	@GetMapping("/user/province/edit/{id}")
 	public String showUpdateProvince(@PathVariable("id") Integer id,Model model) {
-		Stateprovince stateprovince = stateprovinceService.getStateProvince(id);
+		Stateprovince stateprovince = du.getStateprovince(id);
 		if (stateprovince == null)
 			throw new IllegalArgumentException("Invalid country Id:" + id);
 		
 		model.addAttribute("stateprovince", stateprovince);
-		model.addAttribute("countries", countryregionService.findAll());
+		model.addAttribute("countries", du.getAllCountryregion());
 		return "user/updateProvince";
 	}
 	
@@ -88,13 +84,13 @@ public class UserController {
 		if(bindingResult.hasErrors()) {
 			stateprovince.setStateprovinceid(id);
 			model.addAttribute("stateprovince", stateprovince);
-			model.addAttribute("countries", countryregionService.findAll());
+			model.addAttribute("countries",du.getAllCountryregion());
 			return "user/updateProvince";
 		}
 		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			stateprovince.setStateprovinceid(id);
-			stateprovinceService.update(stateprovince,stateprovince.getCountryregion().getCountryregionid());
-			model.addAttribute("provinces", stateprovinceService.findAll());
+			du.updateStateprovince(stateprovince.getCountryregion().getCountryregionid(), stateprovince);
+			model.addAttribute("provinces", du.getAllStateprovinces());
 		}
 		return "redirect:/user/province/";
 	}
@@ -102,14 +98,14 @@ public class UserController {
 	//Direcciones
 	@GetMapping("/user/address/")
 	public String indexAddress(Model model) {
-		model.addAttribute("addresses", addressService.findAll());
+		model.addAttribute("addresses", du.getAllAddresses());
 		return "user/indexAddress";
 	}
 	
 	@GetMapping("/user/address/add")
 	public String addAddress(Model model) {
 		model.addAttribute("address",new Address());
-		model.addAttribute("provinces", stateprovinceService.findAll());
+		model.addAttribute("provinces", du.getAllStateprovinces());
 		return "user/addAddress";
 	}
 	
@@ -122,26 +118,25 @@ public class UserController {
 		
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("addresses", addressService.findAll());
-			model.addAttribute("provinces", stateprovinceService.findAll());
+			model.addAttribute("addresses",du.getAllAddresses());
+			model.addAttribute("provinces", du.getAllStateprovinces());
 	        return "user/addAddress";
 		}
 		
 		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
-			
-			addressService.save(address, address.getStateprovince().getStateprovinceid());
+			du.createAddress(address);
 		}
 		return "redirect:/user/address/";
 	}
 	
 	@GetMapping("/user/address/edit/{id}")
 	public String showUpdateAddress(@PathVariable("id") Integer id,Model model) {
-		Address address = addressService.getAddress(id);
+		Address address = du.getAddress(id);
 		if (address == null)
 			throw new IllegalArgumentException("Invalid country Id:" + id);
 		
 		model.addAttribute("address", address);
-		model.addAttribute("provinces", stateprovinceService.findAll());
+		model.addAttribute("provinces", du.getAllStateprovinces());
 		return "user/updateAddress";
 	}
 	
@@ -156,14 +151,14 @@ public class UserController {
 			
 			model.addAttribute("address", address);
 			address.setAddressid(id);
-			model.addAttribute("addresses", addressService.findAll());
-			model.addAttribute("provinces", stateprovinceService.findAll());
+			model.addAttribute("addresses", du.getAllAddresses());
+			model.addAttribute("provinces", du.getAllStateprovinces());
 			return "user/updateAddress";
 		}
 		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			address.setAddressid(id);
-			addressService.update(address,address.getStateprovince().getStateprovinceid());
-			model.addAttribute("provinces", stateprovinceService.findAll());
+			du.updateAddress(address.getStateprovince().getStateprovinceid(), address);
+			model.addAttribute("provinces", du.getAllStateprovinces());
 		}
 		return "redirect:/user/address/";
 	}

@@ -102,5 +102,11 @@ public class StateprovinceService {
 		
 		return stateprovinceDAO.findById(id);
 	}
+	
+	@Transactional
+	public void saveStateprovinces(Stateprovince sp) {
+
+		stateprovinceDAO.save(sp);
+	}
 
 }

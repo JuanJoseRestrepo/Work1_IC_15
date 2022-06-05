@@ -82,13 +82,13 @@ public class StateprovinceDAO implements StateprovinceDAOInterface {
 	@Override
 	@Transactional
 	public List<Object[]> getStateprovincesWithAddressAndSales(Salesterritory salesterritory) {
-		String jpql = "SELECT stateprovince, COUNT(address.addressid) "
-				+ "FROM Stateprovince stateprovince, Address address "
-				+ "WHERE stateprovince.stateprovinceid = address.stateprovince.stateprovinceid"
-				+ " AND stateprovince.territoryid = " + salesterritory.getTerritoryid()   
-				+ " AND EXISTS(SELECT salestaxrate.stateprovince FROM Salestaxrate salestaxrate WHERE salestaxrate.stateprovince = stateprovince)"
-				+ " GROUP BY stateprovince.stateprovinceid "
-				+ "ORDER BY stateprovince.name";
+		String jpql = "SELECT sp, COUNT(a.addressid) "
+				+ "FROM Stateprovince sp, Address a "
+				+ "WHERE sp.stateprovinceid = a.stateprovince"
+				+ " AND sp.territoryid = " + salesterritory.getTerritoryid()   
+				+ " AND EXISTS(SELECT str.stateprovince FROM Salestaxrate str WHERE str.stateprovince = sp.stateprovinceid)"
+				+ " GROUP BY sp.stateprovinceid "
+				+ "ORDER BY sp.name";
 		
 		return entityManager.createQuery(jpql,Object[].class).getResultList();
 	}

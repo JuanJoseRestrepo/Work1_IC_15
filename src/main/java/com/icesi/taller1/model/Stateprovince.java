@@ -17,6 +17,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the stateprovince database table.
  *
@@ -49,6 +51,7 @@ public class Stateprovince implements Serializable {
 
 	// bi-directional many-to-one association to Address
 	@OneToMany(mappedBy = "stateprovince")
+	@JsonIgnore
 	private List<Address> addresses;
 
 	// bi-directional many-to-one association to Countryregion

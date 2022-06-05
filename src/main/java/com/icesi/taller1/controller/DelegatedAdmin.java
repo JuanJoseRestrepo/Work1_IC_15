@@ -62,7 +62,7 @@ public class DelegatedAdmin {
 	
 	//SALESTAXRATE
 	//------------------------------------------------------------------------
-	public Salestaxrate getSalestaxrate(long id) {
+	public Salestaxrate getSalestaxrate(Integer id) {
 		String url = "http://localhost:8080/sales/" + id;
 		Salestaxrate sr = restTemplate.getForObject(url, Salestaxrate.class);
 		return sr;
@@ -99,39 +99,17 @@ public class DelegatedAdmin {
 	
 	//STATEPROVINCE
 	//------------------------------------------------------------------------
-	
-	public Stateprovince getStateprovince(long id) {
-		String url = "http://localhost:8080/states/" + id;
-		Stateprovince sp = restTemplate.getForObject(url, Stateprovince.class);
-		return sp;
-	}
-	
 	public Iterable<Stateprovince> getAllStateprovince(){
-		String url = "http://localhost:8080/states/";
+		String url = "http://localhost:8080/states";
 		Stateprovince[] sp = restTemplate.getForObject(url, Stateprovince[].class);
 		return Arrays.asList(sp);
 	}
 	
-	public String createStateprovince(Stateprovince sp) {
-		String url = "http://localhost:8080/states/";
-		
-		HttpHeaders headers = new  HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<Stateprovince> entity = new HttpEntity<Stateprovince>(sp, headers);
-		
-		return restTemplate.exchange(url, HttpMethod.POST, entity, String.class).getBody();
-		
+	public Iterable<Stateprovince> findAll() {
+		// TODO Auto-generated method stub
+		Stateprovince[] sps = restTemplate.getForObject("http://localhost:8080/states", Stateprovince[].class);
+		return Arrays.asList(sps);
 	}
 	
-	
-	public String updateStateprovince(long id, @Validated(BasicInfo.class) Stateprovince sp) {
-		String url = "http://localhost:8080/states/";
-		
-		HttpHeaders headers = new  HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<Stateprovince> entity = new HttpEntity<Stateprovince>(sp, headers);
-		
-		return restTemplate.exchange(url + id, HttpMethod.PUT, entity, String.class).getBody();
-	}
 	
 }

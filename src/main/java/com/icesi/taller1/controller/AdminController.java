@@ -105,7 +105,7 @@ public class AdminController {
 	@GetMapping("/admin/sales/add")
 	public String addSales(Model model) {
 		model.addAttribute("salestaxrate",new Salestaxrate());
-		model.addAttribute("provinces", da.getAllSalestaxrate());
+		model.addAttribute("provinces", da.findAll());
 		return "admin/addSales";
 	}
 	
@@ -118,7 +118,7 @@ public class AdminController {
 		
 		if(bindingResult.hasErrors()) {		
 			model.addAttribute("salesses", da.getAllSalestaxrate());
-			model.addAttribute("provinces", da.getAllStateprovince());
+			model.addAttribute("provinces", da.findAll());
 	        return "admin/addSales";
 		}
 		
@@ -132,12 +132,12 @@ public class AdminController {
 	
 	@GetMapping("/admin/sales/edit/{id}")
 	public String showUpdateSales(@PathVariable("id") Integer id,Model model) {
-		Salestaxrate salestaxrate = salestaxrateService.getSalestaxrate(id);
+		Salestaxrate salestaxrate = da.getSalestaxrate(id);
 		if (salestaxrate == null)
 			throw new IllegalArgumentException("Invalid sales Id:" + id);
 		
 		model.addAttribute("salestaxrate", salestaxrate);
-		model.addAttribute("provinces", stateprovinceService.findAll());
+		model.addAttribute("provinces", da.getAllStateprovince());
 		return "admin/updateSales";
 	}
 	
@@ -152,14 +152,14 @@ public class AdminController {
 			
 			model.addAttribute("salestaxrate", salestaxrate);
 			salestaxrate.setSalestaxrateid(id);
-			model.addAttribute("salesses", salestaxrateService.findAll());
-			model.addAttribute("provinces", stateprovinceService.findAll());
+			model.addAttribute("salesses", da.getAllSalestaxrate());
+			model.addAttribute("provinces", da.getAllStateprovince());
 			return "admin/updateSales";
 		}
 		if (!action.equalsIgnoreCase("Cancel") || !action.equalsIgnoreCase("Cancelar")) {
 			salestaxrate.setSalestaxrateid(id);
-			salestaxrateService.update(salestaxrate,salestaxrate.getStateprovince().getStateprovinceid());
-			model.addAttribute("salesses", salestaxrateService.findAll());
+			da.updateSalestaxrate(salestaxrate.getStateprovince().getStateprovinceid(), salestaxrate);
+			model.addAttribute("salesses",da.getAllSalestaxrate());
 			
 		}
 		return "redirect:/admin/sales/";
