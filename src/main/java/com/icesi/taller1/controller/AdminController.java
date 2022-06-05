@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.service.CountryregionService;
 import com.icesi.taller1.service.SalestaxrateService;
@@ -165,6 +166,39 @@ public class AdminController {
 		return "redirect:/admin/sales/";
 	}
 	
+	
+	
+	@GetMapping("/admin/person/")
+    public String indexPerson(Model model) {
+		model.addAttribute("persons", da.getAllPerson());
+        return "admin/indexPerson";
+    }
+	
+	@GetMapping("/admin/person/add")
+	public String addPerson(Model model) {
+		model.addAttribute("person",new Person());
+		return "admin/addPerson";
+	}
+	
+	@PostMapping("/admin/person/add")
+	public String savePerson(@Validated(BasicInfo.class) @ModelAttribute Person person,BindingResult bindingResult,Model model,@RequestParam(value ="action",required = true) String action) {
+		
+		if (action.equals("Cancelar")) {
+			return "redirect:/admin/person/";
+		}
+		
+		if(bindingResult.hasErrors()) {
+			
+			model.addAttribute("persons", da.getAllPerson());
+	        return "admin/addPerson";
+		}
+		if (!action.equalsIgnoreCase("cancel")) {
+
+			da.createPerson(person);
+			
+		}
+		return "redirect:/admin/person/";
+	}
 	
 	
 }

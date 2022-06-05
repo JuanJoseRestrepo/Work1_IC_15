@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.service.CountryregionService;
+import com.icesi.taller1.service.PersonService;
 import com.icesi.taller1.service.SalestaxrateService;
 import com.icesi.taller1.service.StateprovinceService;
 
@@ -28,12 +30,14 @@ public class AdminRestController {
 	private CountryregionService countryregionService;
 	private SalestaxrateService salestaxrateService;
 	private StateprovinceService stateprovinceService;
+	private PersonService personService;
 	@Autowired
 	public AdminRestController(CountryregionService countryregionService, SalestaxrateService salestaxrateService,
-			StateprovinceService stateprovinceService) {
+			StateprovinceService stateprovinceService,PersonService personService) {
 		this.countryregionService = countryregionService;
 		this.salestaxrateService = salestaxrateService;
 		this.stateprovinceService = stateprovinceService;
+		this.personService = personService;
 	}
 	
 	//COUNTRYREGION
@@ -110,4 +114,23 @@ public class AdminRestController {
 		List<Stateprovince> stateprovinces = (List<Stateprovince>) stateprovinceService.findAll();
 		return new ResponseEntity(stateprovinces, HttpStatus.OK);
 	}
+	
+	//PERSONS
+	//----------------------------------------------------------------------------------------------
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/persons", method = RequestMethod.GET)
+	public ResponseEntity<Person> getAllPersons() {
+		List<Person> persons = (List<Person>) personService.findAll();
+		return new ResponseEntity(persons, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/persons", method = RequestMethod.POST)
+	public ResponseEntity<Person> createPerson(@Validated(BasicInfo.class) @RequestBody Person person){
+		
+		personService.save(person);
+		
+		return new ResponseEntity<Person>(person, HttpStatus.OK);
+	}
+	
+	
 }

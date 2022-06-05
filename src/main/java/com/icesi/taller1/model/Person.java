@@ -13,6 +13,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * The persistent class for the person database table.
@@ -34,8 +37,12 @@ public class Person implements Serializable {
 
 	private Integer emailpromotion;
 
+	@NotBlank(groups = BasicInfo.class)
+	@NotEmpty(groups = BasicInfo.class)
 	private String firstname;
 
+	@NotBlank(groups = BasicInfo.class)
+	@NotEmpty(groups = BasicInfo.class)
 	private String lastname;
 
 	private String middlename;

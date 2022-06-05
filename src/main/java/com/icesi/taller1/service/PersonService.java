@@ -53,12 +53,13 @@ public class PersonService {
 	@Transactional
 	public void update(Person person) {
 		Person modPerson = personDAO.findById(person.getBusinessentityid());
-		modPerson.setFirstname(person.getFirstname());
-		modPerson.setLastname(person.getLastname());
-		//modPerson.setTitle(person.getTitle());
-		//modPerson.setBusinessentity(.getById(person.getBusinessentity().getBusinessentityid()));
-
-		personDAO.save(modPerson);
+		
+		if(modPerson != null) {
+			modPerson.setFirstname(person.getFirstname());
+			modPerson.setLastname(person.getLastname());
+			//modPerson.setTitle(person.getTitle());
+			personDAO.save(modPerson);	
+		}
 	}
 	
 	@Transactional
