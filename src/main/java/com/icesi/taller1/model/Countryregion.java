@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the countryregion database table.
  *
@@ -46,6 +48,7 @@ public class Countryregion implements Serializable {
 
 	// bi-directional many-to-one association to Stateprovince
 	@OneToMany(mappedBy = "countryregion")
+	@JsonIgnore
 	private List<Stateprovince> stateprovinces;
 
 	public Countryregion() {

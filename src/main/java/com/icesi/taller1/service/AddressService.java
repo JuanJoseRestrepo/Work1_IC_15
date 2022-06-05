@@ -100,4 +100,12 @@ public class AddressService{
 		return addressDao.findById(id);
 	}
 	
+	
+	@Transactional
+	public void saveAddress(Address address) {
+
+		addressDao.save(address);
+
+	}
+	
 }

@@ -21,20 +21,16 @@ import com.icesi.taller1.service.StateprovinceService;
 @Controller
 public class AdminController {
 	
-	private CountryregionService countryregionService;
-	private SalestaxrateService salestaxrateService;
-	private StateprovinceService stateprovinceService;
+	private DelegatedAdmin da;
 	
 	@Autowired
-	public AdminController(CountryregionService countryregionService,SalestaxrateService salestaxrateService,StateprovinceService stateprovinceService) {
-		this.countryregionService = countryregionService;
-		this.salestaxrateService = salestaxrateService;
-		this.stateprovinceService = stateprovinceService;
+	public AdminController(DelegatedAdmin da) {
+		this.da = da;
 	}
 	
 	@GetMapping("/admin/country/")
     public String indexCountry(Model model) {
-		model.addAttribute("countries", countryregionService.findAll());
+		model.addAttribute("countries", da.getAllCountryregion());
         return "admin/indexCountry";
     }
 	
@@ -53,12 +49,12 @@ public class AdminController {
 		
 		if(bindingResult.hasErrors()) {
 			
-			model.addAttribute("countries", countryregionService.findAll());
+			model.addAttribute("countries", da.getAllCountryregion());
 	        return "admin/addCountry";
 		}
 		if (!action.equalsIgnoreCase("cancel")) {
 			System.out.println("Entre");
-			countryregionService.save(countryregion);
+			da.createCountryregion(countryregion);
 			
 		}
 		
@@ -69,7 +65,7 @@ public class AdminController {
 	
 	@GetMapping("/admin/country/edit/{id}")
 	public String showUpdateCountry(@PathVariable("id") Integer id,Model model) {
-		Countryregion countryregion = countryregionService.getCountryRegion(id);
+		Countryregion countryregion = da.getCountryregion(id);
 		
 		if (countryregion == null)
 			throw new IllegalArgumentException("Invalid country Id:" + id);
@@ -88,13 +84,13 @@ public class AdminController {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("countryregion", countryregion);
 			countryregion.setCountryregionid(id);
-			model.addAttribute("countries", countryregionService.findAll());
+			model.addAttribute("countries", da.getAllCountryregion());
 			return "admin/updateCountry";
 		}
 		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			countryregion.setCountryregionid(id);
-			countryregionService.update(countryregion);
-			model.addAttribute("countries", countryregionService.findAll());
+			da.updateCountryregion(id, countryregion);
+			model.addAttribute("countries", da.getAllCountryregion());
 		}
 		return "redirect:/admin/country/";
 	}
@@ -102,14 +98,14 @@ public class AdminController {
 	//SalesTaxrate
 	@GetMapping("/admin/sales/")
     public String indexSales(Model model) {
-		model.addAttribute("salesses", salestaxrateService.findAll());
+		model.addAttribute("salesses", da.getAllSalestaxrate());
         return "admin/indexSales";
     }
 	
 	@GetMapping("/admin/sales/add")
 	public String addSales(Model model) {
 		model.addAttribute("salestaxrate",new Salestaxrate());
-		model.addAttribute("provinces", stateprovinceService.findAll());
+		model.addAttribute("provinces", da.getAllSalestaxrate());
 		return "admin/addSales";
 	}
 	
@@ -121,14 +117,14 @@ public class AdminController {
 		}
 		
 		if(bindingResult.hasErrors()) {		
-			model.addAttribute("salesses", salestaxrateService.findAll());
-			model.addAttribute("provinces", stateprovinceService.findAll());
+			model.addAttribute("salesses", da.getAllSalestaxrate());
+			model.addAttribute("provinces", da.getAllStateprovince());
 	        return "admin/addSales";
 		}
 		
 		if (!action.equalsIgnoreCase("Cancelar") || !action.equalsIgnoreCase("Cancel")) {
 			
-			salestaxrateService.save(salestaxrate, salestaxrate.getStateprovince().getStateprovinceid());
+			da.createSalestaxrate(salestaxrate);
 		}
 		return "redirect:/admin/sales/";
 	}

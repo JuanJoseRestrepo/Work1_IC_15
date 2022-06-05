@@ -95,6 +95,13 @@ public class SalestaxrateService {
 	public Salestaxrate getSalestaxrate(Integer id) {
 		return salestaxrateDAO.findById(id);
 	}
+	
+	@Transactional
+	public void saveSalestaxrate(Salestaxrate entity) {
+
+		salestaxrateDAO.save(entity);
+
+	}
 
 	
 }
