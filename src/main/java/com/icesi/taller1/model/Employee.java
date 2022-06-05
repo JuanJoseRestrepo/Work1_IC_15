@@ -55,6 +55,8 @@ public class Employee implements Serializable {
 	private Integer sickleavehours;
 
 	private Integer vacationhours;
+	
+	private Person person;
 
 
 	public Employee() {
@@ -181,6 +183,16 @@ public class Employee implements Serializable {
 
 	public void setVacationhours(Integer vacationhours) {
 		this.vacationhours = vacationhours;
+	}
+
+
+	public Person getPerson() {
+		return person;
+	}
+
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 }
