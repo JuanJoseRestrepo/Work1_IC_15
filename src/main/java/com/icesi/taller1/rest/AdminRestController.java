@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Salestaxrate;
+import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.service.CountryregionService;
 import com.icesi.taller1.service.SalestaxrateService;
 import com.icesi.taller1.service.StateprovinceService;
@@ -26,7 +28,6 @@ public class AdminRestController {
 	private CountryregionService countryregionService;
 	private SalestaxrateService salestaxrateService;
 	private StateprovinceService stateprovinceService;
-	
 	@Autowired
 	public AdminRestController(CountryregionService countryregionService, SalestaxrateService salestaxrateService,
 			StateprovinceService stateprovinceService) {
@@ -70,7 +71,7 @@ public class AdminRestController {
 	
 	//SALESTAXRATE
 	//--------------------------------------------------------------------------------------------------
-	/**
+	
 	@RequestMapping(value = "/sales/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Salestaxrate> getSalestaxrate(@PathVariable(value = "id") Integer id){
 		Salestaxrate sr = salestaxrateService.findById(id).get();
@@ -79,7 +80,7 @@ public class AdminRestController {
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/sales/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/sales", method = RequestMethod.GET)
 	public ResponseEntity<Salestaxrate> getAllSalestaxrate() {
 		List<Salestaxrate> salestaxrates = (List<Salestaxrate>) salestaxrateService.findAll();
 		return new ResponseEntity(salestaxrates, HttpStatus.OK);
@@ -100,5 +101,13 @@ public class AdminRestController {
 		
 		return ResponseEntity.ok(sr);
 	}
-	*/
+	
+	//STATEPROVINCE Only one method for call
+	//----------------------------------------------------------------------------------------------
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/states", method = RequestMethod.GET)
+	public ResponseEntity<Stateprovince> getAllStatesprovinces() {
+		List<Stateprovince> stateprovinces = (List<Stateprovince>) stateprovinceService.findAll();
+		return new ResponseEntity(stateprovinces, HttpStatus.OK);
+	}
 }
