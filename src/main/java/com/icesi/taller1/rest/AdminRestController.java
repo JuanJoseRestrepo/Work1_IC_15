@@ -135,6 +135,12 @@ public class AdminRestController {
 		return new ResponseEntity(persons, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/persons/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Person> getPerson(@PathVariable(value = "id") Integer id){
+		Person pr = personService.findById(id);
+		return new ResponseEntity<Person>(pr, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/persons", method = RequestMethod.POST)
 	public ResponseEntity<Person> createPerson(@Validated(BasicInfo.class) @RequestBody Person person){
 		
@@ -142,6 +148,7 @@ public class AdminRestController {
 		
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
+
 	
 	
 	//EMPLOYEE
@@ -149,7 +156,7 @@ public class AdminRestController {
 	
 	@RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployee(@PathVariable(value = "id") Integer id) {
-		Employee be = employeeService.findById(id).get();
+		Employee be = employeeService.findById(id);
 		return new ResponseEntity<Employee>(be, HttpStatus.OK);
 	}
 
@@ -174,10 +181,23 @@ public class AdminRestController {
 		return ResponseEntity.ok(be);
 	}
 	
-	@RequestMapping(value = "/employees/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Employee> deleteEmployee(@Validated(BasicInfo.class) @RequestBody Employee be) {
-		employeeService.deleteEmployee(be);
-		return 	new ResponseEntity<Employee>(be, HttpStatus.OK);
+
+	@DeleteMapping(value= "/employees/{id}")
+	public void deleteEmployee(@PathVariable(value="id") Integer id) {
+		Employee ep = employeeService.findById(id);
+		if(ep != null) {
+			employeeService.deleteEmployee(id);	
+		}
+		
+	}
+	
+	@DeleteMapping(value= "/persons/{id}")
+	public void deletePerson(@PathVariable(value="id") Integer id) {
+		Person p = personService.findById(id);
+		if(p != null) {
+			personService.delete(p);	
+		}
+		
 	}
 	
 	@RequestMapping(value = "/query", method = RequestMethod.GET)

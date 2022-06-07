@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.icesi.taller1.dao.EmployeeDAO;
 import com.icesi.taller1.model.Employee;
+import com.icesi.taller1.model.Person;
 
 @Service
 public class EmployeeService {
@@ -48,8 +49,8 @@ public class EmployeeService {
 		return entity;
 	}
 	@Transactional
-	public Optional<Employee> findById(Integer id) {
-		return Optional.ofNullable(employeeDAO.findById(id));
+	public Employee findById(Integer id) {
+		return employeeDAO.findById(id);
 	}
 	@Transactional
 	public Iterable<Employee> findAll() {
@@ -61,8 +62,8 @@ public class EmployeeService {
 	}
 	
 	@Transactional
-	public void deleteEmployee(Employee emplo) {
-		employeeDAO.delete(emplo);
+	public void deleteEmployee(Integer id) {
+		employeeDAO.delete(id);
 	}
 
 }

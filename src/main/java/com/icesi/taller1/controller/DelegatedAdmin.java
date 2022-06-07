@@ -121,7 +121,9 @@ public class DelegatedAdmin {
 	public Person getPerson(Integer id) {
 		String url = "http://localhost:8080/persons/" + id;
 		Person p = restTemplate.getForObject(url, Person.class);
+		System.out.println(p.getFirstname());
 		return p;
+		
 	}
 	
 	
@@ -187,7 +189,7 @@ public class DelegatedAdmin {
 		
 	}
 	
-	public String updateEmployee(long id, @Validated(BasicInfo.class) Employee cr) {
+	public String updateEmployee(Integer id, @Validated(BasicInfo.class) Employee cr) {
 		String url = "http://localhost:8080/employees/";
 		
 		HttpHeaders headers = new  HttpHeaders();
@@ -197,10 +199,16 @@ public class DelegatedAdmin {
 		return restTemplate.exchange(url + id, HttpMethod.PUT, entity, String.class).getBody();
 	}
 	
-	public void deleteEmployee(Employee per){
+	public void deleteEmployee(Integer id){
 		String url1 = "http://localhost:8080/employees/";
-		//String url2 = "/employees/";
-		restTemplate.delete(url1+per.getBusinessentityid(), Employee.class);
+		restTemplate.delete(url1+id, Employee.class);
+
+	}
+	
+	
+	public void deletePerson(Integer id){
+		String url1 = "http://localhost:8080/persons/";
+		restTemplate.delete(url1+id, Person.class);
 
 	}
 	

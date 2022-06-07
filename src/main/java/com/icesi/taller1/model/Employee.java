@@ -12,6 +12,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * The persistent class for the employee database table.
@@ -56,6 +59,7 @@ public class Employee implements Serializable {
 
 	private Integer vacationhours;
 	
+	@NotNull(groups = BasicInfo.class)
 	private Person person;
 
 

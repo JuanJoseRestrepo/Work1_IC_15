@@ -37,10 +37,10 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 		return entity;
 	}
 	
-	@Override
 	@Transactional
-	public void delete(Employee entity) {
-		entityManager.remove(entity);
+	public void delete(Integer id) {
+		Employee emp = entityManager.find(Employee.class, id);
+		entityManager.remove(emp);
 	}
 	
 	@Override
@@ -55,4 +55,5 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 		String jpql = "Select a from Employee a";
 		return entityManager.createQuery(jpql, Employee.class).getResultList();
 	}
+
 }

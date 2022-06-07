@@ -238,13 +238,6 @@ public class AdminController {
 		return "redirect:/admin/employee/";
 	}
 	
-	@GetMapping("/admin/person/del/{id}")
-	public String deletePerson(@PathVariable("id") Integer id, Model model) {
-		Person  per = da.getPerson(id);
-		da.deletePerson(per);
-		return "redirect:/admin/persons/";
-	}
-	
 	
 	@GetMapping("/admin/employee/")
     public String indexEmployee(Model model) {
@@ -319,23 +312,34 @@ public class AdminController {
 		return "redirect:/admin/employee/";
 	}
 	
-	@DeleteMapping("/admin/employee/del/{id}")
-	public String deleteEmployee(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @Validated(BasicInfo.class) @ModelAttribute Employee employee, BindingResult bindingResult, Model model) {
-		Employee  empl = da.getEmployee(id);
-		System.out.println(empl.getBusinessentityid() + "holaaaaaaaa");
-		if(empl != null) {
-			da.deleteEmployee(empl);
-			model.addAttribute("employees", da.getAllEmployee());
+	
+	@GetMapping("/admin/employee/del/{id}")
+	public String deleteEmployee(@PathVariable("id") Integer id, @Validated(BasicInfo.class) @ModelAttribute Employee employee ,BindingResult bindingResult, Model model) {
+		Employee employeee = da.getEmployee(id);
+		if (employeee != null) {
+			if(employeee.getPerson() != null) {
+				da.deleteEmployee(id);	
+				da.deletePerson(employeee.getPerson().getBusinessentityid());
+			}
 		}
 		
-		return "redirect:/admin/employees/";
+		return "redirect:/admin/employee/";
 	}
+	
+	@GetMapping("/admin/person/del/{id}")
+	public String deletePerson(@PathVariable("id") Integer id, @Validated(BasicInfo.class) @ModelAttribute Person person ,BindingResult bindingResult, Model model) {
+		Person personAux = da.getPerson(id);
+		if (personAux != null) {
+			da.deletePerson(personAux);
+		}
+		return "redirect:/admin/person/";
+	}
+	
 	
 
 	@GetMapping("/admin/addresses/")
 	public String indexSpecialqueries(Model model) {
 		model.addAttribute("addresses", da.findAddressesWithSalesorderheader());
-		System.out.println(da.findAddressesWithSalesorderheader().toString());
 		return "admin/queries";
 	}
 }
