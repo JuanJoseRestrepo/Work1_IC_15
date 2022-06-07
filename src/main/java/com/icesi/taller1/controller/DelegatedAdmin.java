@@ -143,7 +143,7 @@ public class DelegatedAdmin {
 		
 	}
 	
-	public String updatePerson(long id, @Validated(BasicInfo.class) Person cr) {
+	public String updatePerson(Integer id, @Validated(BasicInfo.class) Person cr) {
 		String url = "http://localhost:8080/persons/";
 		
 		HttpHeaders headers = new  HttpHeaders();
@@ -151,6 +151,12 @@ public class DelegatedAdmin {
 		HttpEntity<Person> entity = new HttpEntity<Person>(cr, headers);
 		
 		return restTemplate.exchange(url + id, HttpMethod.PUT, entity, String.class).getBody();
+	}
+	
+	public void deletePerson(Person per){
+		String url1 = "http://localhost:8080/persons/";
+		String url2 = "/persons/";
+		restTemplate.delete(url1+per.getBusinessentityid());
 	}
 	
 	//EMPLOYEE
@@ -189,6 +195,12 @@ public class DelegatedAdmin {
 		HttpEntity<Employee> entity = new HttpEntity<Employee>(cr, headers);
 		
 		return restTemplate.exchange(url + id, HttpMethod.PUT, entity, String.class).getBody();
+	}
+	
+	public void deleteEmployee(Employee per){
+		String url1 = "http://localhost:8080/employees/";
+		String url2 = "/employees/";
+		restTemplate.delete(url1+per.getBusinessentityid());
 	}
 	
 	public Iterable<Address> findAddressesWithSalesorderheader() {

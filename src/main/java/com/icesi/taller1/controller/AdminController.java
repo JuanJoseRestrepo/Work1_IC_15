@@ -237,6 +237,13 @@ public class AdminController {
 		return "redirect:/admin/employee/";
 	}
 	
+	@GetMapping("/admin/person/del/{id}")
+	public String deletePerson(@PathVariable("id") Integer id, Model model) {
+		Person  per = da.getPerson(id);
+		da.deletePerson(per);
+		return "redirect:/admin/persons/";
+	}
+	
 	
 	@GetMapping("/admin/employee/")
     public String indexEmployee(Model model) {
@@ -309,6 +316,13 @@ public class AdminController {
 			
 		}
 		return "redirect:/admin/employee/";
+	}
+	
+	@GetMapping("/admin/employee/del/{id}")
+	public String deleteEmployee(@PathVariable("id") Integer id, Model model) {
+		Employee  empl = da.getEmployee(id);
+		da.deleteEmployee(empl);
+		return "redirect:/admin/employees/";
 	}
 	
 }
