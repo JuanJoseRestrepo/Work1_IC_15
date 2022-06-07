@@ -199,8 +199,9 @@ public class DelegatedAdmin {
 	
 	public void deleteEmployee(Employee per){
 		String url1 = "http://localhost:8080/employees/";
-		String url2 = "/employees/";
-		restTemplate.delete(url1+per.getBusinessentityid());
+		//String url2 = "/employees/";
+		restTemplate.delete(url1+per.getBusinessentityid(), Employee.class);
+
 	}
 	
 	public Iterable<Address> findAddressesWithSalesorderheader() {

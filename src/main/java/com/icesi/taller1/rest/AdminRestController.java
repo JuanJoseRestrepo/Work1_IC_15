@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -170,6 +172,12 @@ public class AdminRestController {
 
 		employeeService.update(be);
 		return ResponseEntity.ok(be);
+	}
+	
+	@RequestMapping(value = "/employees/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Employee> deleteEmployee(@Validated(BasicInfo.class) @RequestBody Employee be) {
+		employeeService.deleteEmployee(be);
+		return 	new ResponseEntity<Employee>(be, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/query", method = RequestMethod.GET)

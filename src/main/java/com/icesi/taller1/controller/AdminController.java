@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -318,10 +319,15 @@ public class AdminController {
 		return "redirect:/admin/employee/";
 	}
 	
-	@GetMapping("/admin/employee/del/{id}")
-	public String deleteEmployee(@PathVariable("id") Integer id, Model model) {
+	@DeleteMapping("/admin/employee/del/{id}")
+	public String deleteEmployee(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, @Validated(BasicInfo.class) @ModelAttribute Employee employee, BindingResult bindingResult, Model model) {
 		Employee  empl = da.getEmployee(id);
-		da.deleteEmployee(empl);
+		System.out.println(empl.getBusinessentityid() + "holaaaaaaaa");
+		if(empl != null) {
+			da.deleteEmployee(empl);
+			model.addAttribute("employees", da.getAllEmployee());
+		}
+		
 		return "redirect:/admin/employees/";
 	}
 	

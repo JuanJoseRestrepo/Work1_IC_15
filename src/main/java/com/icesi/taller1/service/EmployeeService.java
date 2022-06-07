@@ -59,5 +59,10 @@ public class EmployeeService {
 	public Employee getEmployee(Integer id) {
 		return employeeDAO.findById(id);
 	}
+	
+	@Transactional
+	public void deleteEmployee(Employee emplo) {
+		employeeDAO.delete(emplo);
+	}
 
 }
