@@ -40,7 +40,6 @@ public class Taller1Application {
 			PersonRepository pr) {
 		return (args) -> {
 			
-			
 			Countryregion cr = new Countryregion();
 			cr.setCountryregioncode("250");
 			cr.setName("Colombia");
@@ -72,6 +71,7 @@ public class Taller1Application {
 			persona.setFirstname("Juan Jose");
 			persona.setLastname("Restrepo");
 			pr.save(persona);
+
 			
 		};
 	}
