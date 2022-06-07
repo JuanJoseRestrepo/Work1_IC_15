@@ -52,7 +52,7 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 	@Override
 	@Transactional
 	public List<Employee> findAll(){
-		String jpql = "Select a from Person a";
+		String jpql = "Select a from Employee a";
 		return entityManager.createQuery(jpql, Employee.class).getResultList();
 	}
 }

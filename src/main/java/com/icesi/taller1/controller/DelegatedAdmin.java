@@ -11,12 +11,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.RestTemplate;
 
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Employee;
 import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
+
 
 @Component
 public class DelegatedAdmin {
@@ -187,6 +189,12 @@ public class DelegatedAdmin {
 		HttpEntity<Employee> entity = new HttpEntity<Employee>(cr, headers);
 		
 		return restTemplate.exchange(url + id, HttpMethod.PUT, entity, String.class).getBody();
+	}
+	
+	public Iterable<Address> findAddressesWithSalesorderheader() {
+		String url = "http://localhost:8080/employees/";
+		Address[] sps = restTemplate.getForObject(url, Address[].class);
+		return Arrays.asList(sps);
 	}
 	
 	

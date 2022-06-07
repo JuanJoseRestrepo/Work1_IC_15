@@ -14,11 +14,13 @@ import org.springframework.web.client.RestTemplate;
 
 import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Employee;
 import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.repository.AddressRepository;
 import com.icesi.taller1.repository.CountryregionRepository;
+import com.icesi.taller1.repository.EmployeeRepository;
 import com.icesi.taller1.repository.PersonRepository;
 import com.icesi.taller1.repository.SalestaxrateRepository;
 import com.icesi.taller1.repository.StateprovinceRepository;
@@ -37,7 +39,7 @@ public class Taller1Application {
 	
 	@Bean
 	public CommandLineRunner add(CountryregionRepository crp, AddressRepository adr, StateprovinceRepository spr, SalestaxrateRepository srp,
-			PersonRepository pr) {
+			PersonRepository pr, EmployeeRepository ep) {
 		return (args) -> {
 			
 			Countryregion cr = new Countryregion();
@@ -71,8 +73,13 @@ public class Taller1Application {
 			persona.setFirstname("Juan Jose");
 			persona.setLastname("Restrepo");
 			pr.save(persona);
-
 			
+			
+			Employee empleado = new Employee();
+			empleado.setNationalidnumber("1005976323");
+			empleado.setJobtitle("Ing de sistemas");
+			empleado.setPerson(persona);
+			ep.save(empleado);
 		};
 	}
 	
