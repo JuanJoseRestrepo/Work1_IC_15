@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.icesi.taller1.model.Address;
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
 import com.icesi.taller1.model.Employee;
 import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
+import com.icesi.taller1.service.AddressService;
 import com.icesi.taller1.service.CountryregionService;
 import com.icesi.taller1.service.EmployeeService;
 import com.icesi.taller1.service.PersonService;
@@ -32,17 +33,20 @@ public class AdminRestController {
 	private CountryregionService countryregionService;
 	private SalestaxrateService salestaxrateService;
 	private StateprovinceService stateprovinceService;
+	private AddressService addressService;
 	private PersonService personService;
 	private EmployeeService employeeService;
 	
 	@Autowired
 	public AdminRestController(CountryregionService countryregionService, SalestaxrateService salestaxrateService,
-			StateprovinceService stateprovinceService,PersonService personService, EmployeeService employeeService) {
+			StateprovinceService stateprovinceService,PersonService personService, EmployeeService employeeService,
+			AddressService addressService) {
 		this.countryregionService = countryregionService;
 		this.salestaxrateService = salestaxrateService;
 		this.stateprovinceService = stateprovinceService;
 		this.personService = personService;
 		this.employeeService= employeeService;
+		this.addressService = addressService;
 	}
 	
 	//COUNTRYREGION
@@ -167,4 +171,11 @@ public class AdminRestController {
 		employeeService.update(be);
 		return ResponseEntity.ok(be);
 	}
+	
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
+	public List<Address> addressSpecialQuery() {
+		System.out.println(addressService.addresswithSpecialQuery().size());
+		return addressService.addresswithSpecialQuery();
+	}
+	
 }

@@ -311,4 +311,11 @@ public class AdminController {
 		return "redirect:/admin/employee/";
 	}
 	
+
+	@GetMapping("/admin/addresses/")
+	public String indexSpecialqueries(Model model) {
+		model.addAttribute("addresses", da.findAddressesWithSalesorderheader());
+		System.out.println(da.findAddressesWithSalesorderheader().toString());
+		return "admin/queries";
+	}
 }

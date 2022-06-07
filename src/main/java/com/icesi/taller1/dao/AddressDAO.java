@@ -74,7 +74,7 @@ public class AddressDAO implements AddressDAOInterface {
 	@Override
 	@Transactional
 	public List<Address> getListAddressByAlmostTwoHeadsBySales() {
-		String jpql = "Select a from Address a WHERE (SELECT COUNT(w) FROM Salesorderheader w WHERE w MEMBER OF a.salesorderheaders) >= 2";
+		String jpql = "Select a from Address a WHERE (SELECT COUNT(w) FROM Salesorderheader w WHERE w MEMBER OF a.salesorderheaders) >= 1";
 		return entityManager.createQuery(jpql,Address.class).getResultList();
 	}
 
