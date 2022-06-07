@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.icesi.taller1.model.BasicInfo;
 import com.icesi.taller1.model.Countryregion;
+import com.icesi.taller1.model.Employee;
 import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
 import com.icesi.taller1.service.CountryregionService;
+import com.icesi.taller1.service.EmployeeService;
 import com.icesi.taller1.service.PersonService;
 import com.icesi.taller1.service.SalestaxrateService;
 import com.icesi.taller1.service.StateprovinceService;
@@ -31,13 +33,16 @@ public class AdminRestController {
 	private SalestaxrateService salestaxrateService;
 	private StateprovinceService stateprovinceService;
 	private PersonService personService;
+	private EmployeeService employeeService;
+	
 	@Autowired
 	public AdminRestController(CountryregionService countryregionService, SalestaxrateService salestaxrateService,
-			StateprovinceService stateprovinceService,PersonService personService) {
+			StateprovinceService stateprovinceService,PersonService personService, EmployeeService employeeService) {
 		this.countryregionService = countryregionService;
 		this.salestaxrateService = salestaxrateService;
 		this.stateprovinceService = stateprovinceService;
 		this.personService = personService;
+		this.employeeService= employeeService;
 	}
 	
 	//COUNTRYREGION
@@ -133,4 +138,33 @@ public class AdminRestController {
 	}
 	
 	
+	//EMPLOYEE
+	//-----------------------------------------------------------------------------------------------
+	
+	@RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Employee> getEmployee(@PathVariable(value = "id") Integer id) {
+		Employee be = employeeService.findById(id).get();
+		return new ResponseEntity<Employee>(be, HttpStatus.OK);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/employees", method = RequestMethod.GET)
+	public ResponseEntity<Employee> listEmployees() {
+		List<Employee> entities = ((List<Employee>) employeeService.findAll());
+		return new ResponseEntity(entities, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/employees", method = RequestMethod.POST)
+	public ResponseEntity<Employee> createEmployee(@Validated(BasicInfo.class) @RequestBody Employee be) {
+		employeeService.save(be);
+		return new ResponseEntity<Employee>(be, HttpStatus.CREATED);
+	}
+
+	@PutMapping("/employees/{id}")
+	public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Integer id,
+			@Validated(BasicInfo.class) @RequestBody Employee be) {
+
+		employeeService.update(be);
+		return ResponseEntity.ok(be);
+	}
 }
