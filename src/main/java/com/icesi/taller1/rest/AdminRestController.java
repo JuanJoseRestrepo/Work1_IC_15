@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -141,13 +142,19 @@ public class AdminRestController {
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 	
+	@DeleteMapping(value= "/persons/{id}")
+	public void deletePerson(@PathVariable(value="id") Integer id) {
+		Person p = personService.findById(id);
+		personService.delete(p);
+	}
+	
 	
 	//EMPLOYEE
 	//-----------------------------------------------------------------------------------------------
 	
 	@RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Employee> getEmployee(@PathVariable(value = "id") Integer id) {
-		Employee be = employeeService.findById(id).get();
+		Employee be = employeeService.findById(id);
 		return new ResponseEntity<Employee>(be, HttpStatus.OK);
 	}
 
@@ -170,6 +177,12 @@ public class AdminRestController {
 
 		employeeService.update(be);
 		return ResponseEntity.ok(be);
+	}
+	
+	@DeleteMapping(value= "/employees/{id}")
+	public void deleteEmployee(@PathVariable(value="id") Integer id) {
+		Employee p = employeeService.findById(id);
+		employeeService.delete(p);
 	}
 	
 	@RequestMapping(value = "/query", method = RequestMethod.GET)

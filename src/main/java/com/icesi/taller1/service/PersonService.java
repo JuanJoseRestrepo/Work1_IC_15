@@ -63,7 +63,7 @@ public class PersonService {
 	}
 	
 	@Transactional
-	public Iterable<Person> findAllById(long id) {
+	public Iterable<Person> findAllById(Integer id) {
 		ArrayList<Person> persons = (ArrayList<Person>) personDAO.findAll();
 		return persons;
 	}
