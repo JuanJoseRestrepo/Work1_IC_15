@@ -204,7 +204,7 @@ public class DelegatedAdmin {
 	}
 	
 	public Iterable<Address> findAddressesWithSalesorderheader() {
-		String url = "http://localhost:8080/employees/";
+		String url = "http://localhost:8080/query/";
 		Address[] sps = restTemplate.getForObject(url, Address[].class);
 		return Arrays.asList(sps);
 	}

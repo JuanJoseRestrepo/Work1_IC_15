@@ -1,6 +1,8 @@
 package com.icesi.taller1.boot;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,12 +20,15 @@ import com.icesi.taller1.model.Employee;
 import com.icesi.taller1.model.Person;
 import com.icesi.taller1.model.Salestaxrate;
 import com.icesi.taller1.model.Stateprovince;
+import com.icesi.taller1.model.sales.Salesorderheader;
 import com.icesi.taller1.repository.AddressRepository;
 import com.icesi.taller1.repository.CountryregionRepository;
 import com.icesi.taller1.repository.EmployeeRepository;
 import com.icesi.taller1.repository.PersonRepository;
+import com.icesi.taller1.repository.SalesorderheaderRepository;
 import com.icesi.taller1.repository.SalestaxrateRepository;
 import com.icesi.taller1.repository.StateprovinceRepository;
+
 
 @SpringBootApplication
 @EnableJpaRepositories("com.icesi.taller1.repository")
@@ -39,7 +44,7 @@ public class Taller1Application {
 	
 	@Bean
 	public CommandLineRunner add(CountryregionRepository crp, AddressRepository adr, StateprovinceRepository spr, SalestaxrateRepository srp,
-			PersonRepository pr, EmployeeRepository ep) {
+			PersonRepository pr, EmployeeRepository ep, SalesorderheaderRepository shr) {
 		return (args) -> {
 			
 			Countryregion cr = new Countryregion();
@@ -61,7 +66,20 @@ public class Taller1Application {
 			adres.setCity("Cali");
 			adres.setPostalcode("123456");
 			adres.setStateprovince(state);
+			Salesorderheader salesorder1 = new Salesorderheader();
+			Salesorderheader salesorder2 = new Salesorderheader();
+			Salesorderheader salesorder3 = new Salesorderheader();
+			
+			salesorder1.setShiptoaddress(adres);
+			salesorder2.setShiptoaddress(adres);
+			salesorder3.setShiptoaddress(adres);
+			
 			adr.save(adres);
+			
+			shr.save(salesorder1);
+			shr.save(salesorder2);
+			shr.save(salesorder3);
+			
 			
 			Salestaxrate sales = new Salestaxrate();
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));

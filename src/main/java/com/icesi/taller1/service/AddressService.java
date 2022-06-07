@@ -1,4 +1,5 @@
 package com.icesi.taller1.service;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -106,6 +107,10 @@ public class AddressService{
 
 		addressDao.save(address);
 
+	}
+	@Transactional
+	public List<Address> addresswithSpecialQuery(){
+		return addressDao.getListAddressByAlmostTwoHeadsBySales();
 	}
 	
 }

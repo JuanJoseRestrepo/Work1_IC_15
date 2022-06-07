@@ -359,5 +359,7 @@ public class Salesorderheader implements Serializable {
 	public void setTotaldue(BigDecimal totaldue) {
 		this.totaldue = totaldue;
 	}
+	
+	
 
 }
