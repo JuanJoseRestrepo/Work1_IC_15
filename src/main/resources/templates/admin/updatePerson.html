@@ -41,6 +41,62 @@
 								class="text-danger">
 							</span>
 					</div>
+					<div class="form-group col-md-6">
+                            <label for="additionalcontactinfo" class="col-form-label">Contact Info</label> <input type="text" th:field="*{additionalcontactinfo}" class="form-control"
+                                id="additionalcontactinfo" placeholder="additionalcontactinfo">
+                                <span
+								th:if="${#fields.hasErrors('additionalcontactinfo')}" th:errors="*{additionalcontactinfo}"
+								class="text-danger">
+							</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="demographics" class="col-form-label">Demographics</label> <input type="text" th:field="*{demographics}" class="form-control"
+                                id="demographics" placeholder="demographics">
+                                 <span
+									th:if="${#fields.hasErrors('demographics')}" th:errors="*{demographics}"
+									class="text-danger">
+								</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="emailpromotion" class="col-form-label">Email Promotion</label> <input type="number" th:field="*{emailpromotion}" class="form-control"
+                                id="emailpromotion" placeholder="emailpromotion">
+                                <span
+									th:if="${#fields.hasErrors('emailpromotion')}" th:errors="*{emailpromotion}"
+									class="text-danger">
+								</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="namestyle" class="col-form-label">Name Style</label><input type="text" th:field="*{namestyle}" class="form-control"
+                                id="namestyle" placeholder="namestyle">
+                                <span
+									th:if="${#fields.hasErrors('namestyle')}" th:errors="*{namestyle}"
+									class="text-danger">
+								</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="persontype" class="col-form-label">Person Type</label><input type="text" th:field="*{persontype}" class="form-control"
+                                id="persontype" placeholder="persontype">
+                                <span
+									th:if="${#fields.hasErrors('persontype')}" th:errors="*{persontype}"
+									class="text-danger">
+								</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="suffix" class="col-form-label">Suffix</label><input type="text" th:field="*{suffix}" class="form-control"
+                                id="suffix" placeholder="suffix">
+                                <span
+									th:if="${#fields.hasErrors('suffix')}" th:errors="*{suffix}"
+									class="text-danger">
+								</span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="title" class="col-form-label">Title</label><input type="text" th:field="*{title}" class="form-control"
+                                id="title" placeholder="title">
+                                 <span
+									th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+									class="text-danger">
+								</span>
+                        </div>
 					
 					<div class="row">
 						<div class="col-md-3 mt-3">

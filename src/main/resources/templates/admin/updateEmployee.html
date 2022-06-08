@@ -50,6 +50,36 @@
 							</select> <span th:if="${#fields.hasErrors('person')}"
 								th:errors="*{person}" class="text-danger"></span>
 					</div>
+					<div class="form-group col-md-6">
+                            <label for="birthdate" class="col-form-label">Fecha de nacimiento</label>
+                            <input type="date" th:field="*{birthdate}" class="form-control" id="birthdate"
+                                placeholder="11/10/1999">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="currentflag" class="col-form-label">Bandera actual</label>
+                            <input type="text" th:field="*{currentflag}" class="form-control" id="currentflag"
+                                placeholder="Azul">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="gender" class="col-form-label">Genero</label>
+                            <input type="text" th:field="*{gender}" class="form-control" id="gender"
+                                placeholder="Macho">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="hiredate" class="col-form-label">Fecha de contratacion</label>
+                            <input type="date" th:field="*{hiredate}" class="form-control" id="hiredate"
+                                placeholder="09/06/2022">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="loginid" class="col-form-label">Id de ingreso</label>
+                            <input type="text" th:field="*{loginid}" class="form-control" id="loginid"
+                                placeholder="********GHT">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="maritalstatus" class="col-form-label">Razon social</label>
+                            <input type="text" th:field="*{maritalstatus}" class="form-control" id="maritalstatus"
+                                placeholder="Soltero">
+                        </div>
 					
 					<div class="row">
 						<div class="col-md-3 mt-3">

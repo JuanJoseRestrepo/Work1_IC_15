@@ -29,6 +29,12 @@
 								<th>Cedula</th>
 								<th>Titulo profesional</th>
 								<th>Persona asociada</th>
+								<th>Fecha de nacimiento</th>
+								<th>Bandera actual</th>
+								<th>Genero</th>
+								<th>Fecha de contratacion</th>
+								<th>Id de ingreso</th>
+								<th>Razon social</th>
 								<th>Editar</th>
 								<th>Borrar</th>
 							</tr>
@@ -39,6 +45,12 @@
 								<td th:text="${employee.nationalidnumber}"></td>
 								<td th:text="${employee.jobtitle}"></td>
 								<td th:text="${employee.person.firstname}"></td>
+								<td th:text="${#dates.format(employee.birthdate, 'dd-MM-yyyy')}"></td>
+								<td th:text="${employee.currentflag}"></td>
+								<td th:text="${employee.gender}"></td>
+								<td th:text="${#dates.format(employee.hiredate, 'dd-MM-yyyy')}"></td>
+								<td th:text="${employee.loginid}"></td>
+								<td th:text="${employee.maritalstatus}"></td>
 								<td><a th:href="@{/admin/employee/edit/{id}(id=${employee.businessentityid})}"
                                     class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{/admin/employee/del/{id}(id=${employee.businessentityid})}"

@@ -28,6 +28,13 @@
 								<th>Id</th>
 								<th>Nombre</th>
 								<th>Apellido</th>
+								<th>Contact Info</th>
+                                <th>Demographics</th>
+                                <th>Email Promotion</th>
+                                <th>Namestyle</th>
+                                <th>Person Type</th>
+                                <th>Suffix</th>
+                                <th>Title</th>
 								<th>Editar</th>
 								<th>Borrar</th>
 							</tr>
@@ -37,6 +44,13 @@
 								<td th:text="${person.businessentityid}"></td>
 								<td th:text="${person.firstname}"></td>
 								<td th:text="${person.lastname}"></td>
+								<td th:text="${person.additionalcontactinfo}"></td>
+								<td th:text="${person.demographics}"></td>
+								<td th:text="${person.emailpromotion}"></td>
+								<td th:text="${person.namestyle}"></td>
+								<td th:text="${person.persontype}"></td>
+								<td th:text="${person.suffix}"></td>
+								<td th:text="${person.title}"></td>
 								<td><a th:href="@{/admin/person/edit/{id}(id=${person.businessentityid})}"
                                     class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{/admin/person/del/{id}(id=${person.businessentityid})}"
