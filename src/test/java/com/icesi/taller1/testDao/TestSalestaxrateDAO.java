@@ -122,7 +122,7 @@ public class TestSalestaxrateDAO {
 			 assertNotNull(salestaxrateDAO);
 			 salestaxrateDAO.save(salestaxrate);
 			 
-			assertEquals(salestaxrateDAO.findAll().size(), 2);
+			assertEquals(salestaxrateDAO.findAll().size(), 1);
 
 		 }
 		 
@@ -156,7 +156,7 @@ public class TestSalestaxrateDAO {
 			 assertNotNull(salestaxrateDAO);
 			 salestaxrateDAO.save(salestaxrate);
 			 
-			 assertEquals(salestaxrateDAO.getSalestaxrateByName(salestaxrate.getName()).size(),2);
+			 assertEquals(salestaxrateDAO.getSalestaxrateByName(salestaxrate.getName()).size(),1);
 			 
 		 }
 		 

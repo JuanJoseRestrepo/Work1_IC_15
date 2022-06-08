@@ -102,7 +102,7 @@ public class TestCountryregionDAO {
 		initDao();
 		countryregionDAO.save(countryregion);
 		
-		assertEquals(countryregionDAO.findAll().size(), 2);
+		assertEquals(countryregionDAO.findAll().size(), 1);
 	}
 	
 	@Test

@@ -122,7 +122,7 @@ public class TestAddressDAO {
 			assertNotNull(addressDAO);
 			addressDAO.save(address);
 			
-			assertEquals(addressDAO.findAll().size(), 2);
+			assertEquals(addressDAO.findAll().size(), 1);
 			
 		}
 		
@@ -164,7 +164,7 @@ public class TestAddressDAO {
 			
 			List<Address> listAddress = addressDAO.getAddressByCity("Cali");
 			
-			assertEquals(listAddress.size(), 3);
+			assertEquals(listAddress.size(), 2);
 	
 		}
 		

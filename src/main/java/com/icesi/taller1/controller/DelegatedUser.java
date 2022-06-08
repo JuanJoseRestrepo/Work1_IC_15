@@ -94,4 +94,8 @@ public class DelegatedUser {
 		return Arrays.asList(cr);
 	}
 	
+	public void save(Address address) {
+		restTemplate.postForEntity("http://localhost:8080/addresses/", address, Address.class);
+	}
+	
 }

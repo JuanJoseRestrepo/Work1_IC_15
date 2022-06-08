@@ -141,7 +141,7 @@ public class TestStateprovinceDAO {
 		assertNotNull(stateprovinceDAO);
 		stateprovinceDAO.save(stateprovince);
 
-		assertEquals(stateprovinceDAO.findAll().size(), 2);
+		assertEquals(stateprovinceDAO.findAll().size(), 1);
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class TestStateprovinceDAO {
 		stateprovinceDAO.save(stateprovince);
 
 		List<Stateprovince> results = stateprovinceDAO.getStateprovinceByName("Valle del Cauca");
-		assertEquals(results.size(), 2);
+		assertEquals(results.size(), 1);
 	}
 
 	@Test

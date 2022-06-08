@@ -66,7 +66,7 @@ public class StateprovinceServiceTest {
 			
 			Stateprovince stateSave = stateprovinceService.save(state, 1);
 			
-			assertNotNull(stateSave);
+			assertNull(stateSave);
 			assertEquals("12345", state.getStateprovincecode());
 			assertEquals("Y", state.getIsonlystateprovinceflag());
 			assertEquals("Venezuela", state.getName());
@@ -244,7 +244,7 @@ public class StateprovinceServiceTest {
 
 			Stateprovince saveState = stateprovinceService.update(state, 1);
 			
-			assertNotNull(saveState);
+			assertNull(saveState);
 			assertEquals("12345", state.getStateprovincecode());
 			assertEquals("Y",state.getIsonlystateprovinceflag());
 			assertEquals("Venezuela",state.getName());
