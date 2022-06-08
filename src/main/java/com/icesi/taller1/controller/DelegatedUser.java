@@ -55,6 +55,10 @@ public class DelegatedUser {
 	         "http://localhost:8080/provinces/"+id, HttpMethod.PUT, entity, String.class).getBody();
 	}
 	
+	public void save(Stateprovince stateprovince) {
+		restTemplate.postForEntity("http://localhost:8080/provinces/", stateprovince, Stateprovince.class);
+	}
+	
 	//Address
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	

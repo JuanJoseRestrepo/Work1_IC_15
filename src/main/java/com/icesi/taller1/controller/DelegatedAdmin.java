@@ -34,6 +34,9 @@ public class DelegatedAdmin {
 		return cr;
 	}
 	
+	public void save(Countryregion countryregion) {
+		restTemplate.postForEntity("http://localhost:8080/countries/", countryregion, Countryregion.class);
+	}
 	
 	public Iterable<Countryregion> getAllCountryregion(){
 		String url = "http://localhost:8080/countries";
@@ -78,6 +81,9 @@ public class DelegatedAdmin {
 		return Arrays.asList(sr);
 	}
 	
+	public void save(Salestaxrate salestaxrate) {
+		restTemplate.postForEntity("http://localhost:8080/sales/", salestaxrate, Salestaxrate.class);
+	}
 	
 	public String createSalestaxrate(Salestaxrate sr) {
 		String url = "http://localhost:8080/sales/";
