@@ -52,6 +52,11 @@ public class Taller1Application {
 			cr.setName("Colombia");
 			crp.save(cr);
 			
+			Countryregion country = new Countryregion();
+			country.setCountryregioncode("130");
+			country.setName("Cucuta");
+			crp.save(country);
+			
 			Stateprovince state = new Stateprovince();
 			state.setStateprovincecode("12345");
 			state.setIsonlystateprovinceflag("Y");
@@ -59,6 +64,13 @@ public class Taller1Application {
 			state.setCountryregion(cr);
 			spr.save(state);
 			
+			
+			Stateprovince estado = new Stateprovince();
+			estado.setStateprovincecode("12346");
+			estado.setIsonlystateprovinceflag("N");
+			estado.setName("Colombia");
+			estado.setCountryregion(cr);
+			spr.save(estado);
 			
 			Address adres = new Address();
 			adres.setAddressline1("Cra 29 #10b - 118");
@@ -80,6 +92,25 @@ public class Taller1Application {
 			shr.save(salesorder2);
 			shr.save(salesorder3);
 			
+			Address adres2 = new Address();
+			adres2.setAddressline1("Calle 18 #100-20");
+			adres2.setAddressline2("Address2");
+			adres2.setCity("Cundinamarca");
+			adres2.setPostalcode("245987");
+			adres2.setStateprovince(estado);
+			Salesorderheader salesorder4 = new Salesorderheader();
+			Salesorderheader salesorder5 = new Salesorderheader();
+			Salesorderheader salesorder6 = new Salesorderheader();
+			
+			salesorder4.setShiptoaddress(adres2);
+			salesorder5.setShiptoaddress(adres2);
+			salesorder6.setShiptoaddress(adres2);
+			
+			adr.save(adres2);
+			
+			shr.save(salesorder4);
+			shr.save(salesorder5);
+			shr.save(salesorder6);
 			
 			Salestaxrate sales = new Salestaxrate();
 			sales.setTaxrate(new BigDecimal("124567890.0987654321"));

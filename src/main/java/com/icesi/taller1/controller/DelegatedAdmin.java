@@ -221,6 +221,7 @@ public class DelegatedAdmin {
 	public Iterable<Address> findAddressesWithSalesorderheader() {
 		String url = "http://localhost:8080/query/";
 		Address[] sps = restTemplate.getForObject(url, Address[].class);
+		System.out.println(sps[1].getStateprovince().getStateprovincecode());
 		return Arrays.asList(sps);
 	}
 	
